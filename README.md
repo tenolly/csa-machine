@@ -1,2 +1,14 @@
-# csa-lang
-Laboratory work from the computer architecture course.
+# Лабораторная работа 4
+Вариант: `alg | risc | neum | hw | tick | binary | trap | mem | cstr | prob2 | cache`
+
+# Язык программирования
+Будет позже...
+
+# Транслятор
+Будет позже...
+
+# Система команд 
+Будет позже...
+
+# Модель процессора
+Будет позже...
