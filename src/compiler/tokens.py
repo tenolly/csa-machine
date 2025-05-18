@@ -103,7 +103,7 @@ class ShiftLeftToken(Token):
 
 class NotEqualToken(Token):
     def __repr__(self) -> str:
-        return "<>"
+        return "!="
 
 
 class GreaterToken(Token):

@@ -95,10 +95,13 @@ SINGLE_OR_DOUBLE_SIGNS = (
     LESS := "<",
     LESS_OR_EQUAL := "<=",
     SHIFT_LEFT := "<<",
-    NOT_EQUAL := "<>",
     GREATER := ">",
     GREATER_OR_EQUAL := ">=",
     SHIFT_RIGHT := ">>",
+)
+
+DOUBLE_SIGNS = (
+    NOT_EQUAL := "!=",
 )
 
 COMMENT_MARK = (
@@ -158,12 +161,15 @@ class Tokenizer:
             CHARACTERS: self._parse_word,
             SINGLE_SIGNS: self._parse_single_sign,
             SINGLE_OR_DOUBLE_SIGNS: self._parse_single_or_double_sign,
+            tuple(sign[0] for sign in DOUBLE_SIGNS): self._parse_double_sign,
             COMMENT_MARK: self._skip_comment,
             SPACE_OPTIONS: self._skip_char,
         }
 
         while self._advance() is not None:
             for target_chars, parse_target_token in transitions.items():
+                if self._current_char == "!":
+                    print(target_chars)
                 if self._current_char in target_chars:
                     parse_target_token()
                     break
@@ -243,6 +249,18 @@ class Tokenizer:
 
         if new_token is None:
             self._throw_undefined_token_error(self._current_char)
+
+        self.tokens.append(new_token)
+
+    def _parse_double_sign(self) -> None:
+        new_token = None
+        next_char = self.peek_next()
+
+        if self._current_char + next_char == NOT_EQUAL:
+            new_token = NotEqualToken()
+
+        if new_token is None:
+            self._throw_undefined_token_error(self._current_char + next_char)
 
         self.tokens.append(new_token)
 
