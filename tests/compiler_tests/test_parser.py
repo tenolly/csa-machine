@@ -4,12 +4,12 @@ import pytest
 
 from src.compiler.parser import Parser
 from src.compiler.parser.terms import (
+    ArithmeticOperator,
     BinOpTerm,
     BitwiseOperator,
     BranchTerm,
     BreakTerm,
     ComparisonOperator,
-    ArithmeticOperator,
     ContinueTerm,
     DataTypes,
     ForTerm,
