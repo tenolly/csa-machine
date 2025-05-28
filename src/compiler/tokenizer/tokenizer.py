@@ -131,7 +131,7 @@ CHARACTERS = (
 
 
 class Tokenizer:
-    CHAR2_TO_TOKEN = {
+    _CHAR2_TO_TOKEN = {
         EQUAL: EqualToken,
         LESS_OR_EQUAL: LessOrEqualToken,
         SHIFT_LEFT: ShiftLeftToken,
@@ -140,7 +140,7 @@ class Tokenizer:
         NOT_EQUAL: NotEqualToken,
     }
 
-    CHAR_TO_TOKEN = {
+    _CHAR_TO_TOKEN = {
         ASSIGN: AssignToken,
         LESS: LessToken,
         GREATER: GreaterToken,
@@ -160,35 +160,35 @@ class Tokenizer:
         PERCENT: PercentToken,
     }
 
-    DATA_TYPE_TO_TOKEN = {
+    _DATA_TYPE_TO_TOKEN = {
         STR_DATA_TYPE: StringDataTypeToken,
         INT_DATA_TYPE: IntegerDataTypeToken,
         VOID_DATA_TYPE: VoidDataTypeToken,
     }
 
-    BRANCH_OPTION_TO_TOKEN = {
+    _BRANCH_OPTION_TO_TOKEN = {
         IF_BRANCH: IfToken,
         ELIF_BRANCH: ElifToken,
         ELSE_BRANCH: ElseToken,
     }
 
-    CYCLE_CONTROL_TO_TOKEN = {
+    _CYCLE_CONTROL_TO_TOKEN = {
         FOR: ForToken,
         CONTINUE: ContinueToken,
         BREAK: BreakToken,
     }
 
-    FUNCTION_CONTROL_TO_TOKEN = {
+    _FUNCTION_CONTROL_TO_TOKEN = {
         RETURN: ReturnToken,
     }
 
-    LOGICAL_OPERATION_TO_TOKEN = {
+    _LOGICAL_OPERATION_TO_TOKEN = {
         AND: AndToken,
         OR: OrToken,
         NOT: NotToken,
     }
 
-    IO_OPERATION_TO_TOKEN = {
+    _IO_OPERATION_TO_TOKEN = {
         INPUT: InputToken,
         PRINT: PrintToken,
     }
@@ -284,13 +284,13 @@ class Tokenizer:
         second_char = self._advance()
 
         if second_char is not None:
-            token_cls = self.CHAR2_TO_TOKEN.get(first_char + second_char)
+            token_cls = self._CHAR2_TO_TOKEN.get(first_char + second_char)
             if token_cls is not None:
                 self.tokens.append(token_cls())
                 self._advance()
                 return
 
-        token_cls = self.CHAR_TO_TOKEN.get(first_char)
+        token_cls = self._CHAR_TO_TOKEN.get(first_char)
         if token_cls is None:
             self._throw_undefined_token_error(first_char)
 
@@ -312,17 +312,17 @@ class Tokenizer:
 
         token_cls = None
         if word in DATA_TYPES:
-            token_cls = self.DATA_TYPE_TO_TOKEN[word]
+            token_cls = self._DATA_TYPE_TO_TOKEN[word]
         elif word in BRANCHES:
-            token_cls = self.BRANCH_OPTION_TO_TOKEN[word]
+            token_cls = self._BRANCH_OPTION_TO_TOKEN[word]
         elif word in CYCLE_CONTROL:
-            token_cls = self.CYCLE_CONTROL_TO_TOKEN[word]
+            token_cls = self._CYCLE_CONTROL_TO_TOKEN[word]
         elif word in FUNCTION_CONTROL:
-            token_cls = self.FUNCTION_CONTROL_TO_TOKEN[word]
+            token_cls = self._FUNCTION_CONTROL_TO_TOKEN[word]
         elif word in LOGICAL_OPERATIONS:
-            token_cls = self.LOGICAL_OPERATION_TO_TOKEN[word]
+            token_cls = self._LOGICAL_OPERATION_TO_TOKEN[word]
         elif word in IO_OPERATIONS:
-            token_cls = self.IO_OPERATION_TO_TOKEN[word]
+            token_cls = self._IO_OPERATION_TO_TOKEN[word]
 
         if token_cls is None:
             token = IdentifierToken(word)
@@ -357,9 +357,14 @@ class Tokenizer:
 
         token = ""
 
-        while self._advance() not in QUOTES:
+        while True:
+            self._advance()
+
             if self._current_char is None:
                 self._throw_incorrect_token_error(token)
+
+            if self._current_char in QUOTES:
+                break
 
             token += self._current_char
 

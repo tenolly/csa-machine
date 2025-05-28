@@ -1,5 +1,6 @@
 from enum import Enum
-from typing import Dict, List, Optional, Type, Union
+from functools import wraps
+from typing import Callable, Dict, List, Optional, Type, Union
 
 from ..tokenizer.tokens import (
     AndToken,
@@ -46,7 +47,7 @@ from ..tokenizer.tokens import (
     Token,
     VoidDataTypeToken,
 )
-from .exceptions import ParserException
+from .exceptions import ContextStackException, ParserException
 from .terms import (
     ArithmeticOperator,
     BinOpTerm,
@@ -80,30 +81,74 @@ class ParserContext(Enum):
     IN_CYCLE = 1
 
 
+def set_context(context: ParserContext):
+    def decorator(function: Callable):
+        @wraps(function)
+        def wrapper(self, *args, **kwargs):
+            self._enter_context(context)
+            result = function(self, *args, **kwargs)
+            self._exit_context()
+
+            return result
+
+        return wrapper
+
+    return decorator
+
+
 class Parser:
+    _DATA_TYPE_TOKEN_MAP = {
+        StringDataTypeToken: DataTypes.STR,
+        IntegerDataTypeToken: DataTypes.INT,
+        VoidDataTypeToken: DataTypes.VOID,
+    }
+
+    _BITWISE_OPERATIONS_MAP = {
+        ShiftLeftToken: BitwiseOperator.SHL,
+        ShiftRightToken: BitwiseOperator.SHR,
+    }
+
+    _MULTIPLICATIVE_OPERATIONS_MAP = {
+        AsteriskToken: ArithmeticOperator.MUL,
+        SlashToken: ArithmeticOperator.DIV,
+        PercentToken: ArithmeticOperator.MOD,
+    }
+
+    _ADDITIVE_OPERATIONS_MAP = {
+        PlusToken: ArithmeticOperator.ADD,
+        MinusToken: ArithmeticOperator.SUB,
+    }
+
+    _COMPARE_OPERATIONS_MAP = {
+        EqualToken: ComparisonOperator.EQ,
+        NotEqualToken: ComparisonOperator.NEQ,
+        LessToken: ComparisonOperator.LT,
+        LessOrEqualToken: ComparisonOperator.LTE,
+        GreaterToken: ComparisonOperator.GT,
+        GreaterOrEqualToken: ComparisonOperator.GTE,
+    }
+
     def __init__(self, tokens: List[Token]):
         self._tokens: List[Token] = tokens
 
         self._current_index: int = -1
         self._current_token: Optional[Token] = None
 
-        self._context: Dict[ParserContext, int] = {
-            ParserContext.IN_FUNCTION: 0,
-            ParserContext.IN_CYCLE: 0,
-        }
         self._context_stack: List[ParserContext] = []
 
         self.terms: List[Term] = []
 
     def _enter_context(self, context: ParserContext) -> None:
-        self._context[context] += 1
         self._context_stack.append(context)
 
     def _exit_context(self) -> None:
-        self._context[self._context_stack.pop()] -= 1
+        if len(self._context_stack) == 0:
+            raise ContextStackException("context stask is empty")
+
+        self._context_stack.pop()
 
     def _is_in_context(self, context: ParserContext) -> bool:
-        return self._context[context] != 0
+        return context in self._context_stack
 
     def _is_in_direct_context(self, context: ParserContext) -> bool:
         return len(self._context_stack) != 0 and self._context_stack[-1] == context
@@ -149,10 +194,11 @@ class Parser:
         }
 
         if self._is_in_context(ParserContext.IN_FUNCTION):
-            transitions.update({ReturnToken: self._parse_return})
+            transitions[ReturnToken] = self._parse_return
 
         if self._is_in_direct_context(ParserContext.IN_CYCLE):
-            transitions.update({ContinueToken: self._parse_continue, BreakToken: self._parse_break})
+            transitions[ContinueToken] = self._parse_continue
+            transitions[BreakToken] = self._parse_break
 
         for start_token_cls, parse_term_function in transitions.items():
             if isinstance(self._current_token, start_token_cls):
@@ -160,45 +206,26 @@ class Parser:
 
         self._throw_unexpected_token_error()
 
+    @set_context(ParserContext.IN_FUNCTION)
     def _parse_func_def(self) -> FunctionTerm:
-        self._enter_context(ParserContext.IN_FUNCTION)
-
-        data_type_token = self._expect(DataTypeToken)
-        identifier_token = self._expect(IdentifierToken)
-        list_of_args: List[FunctionArgumentTerm] = self._parse_list_of_func_args()
-        body: List[Term] = self._parse_body()
-
-        self._exit_context()
-
         return FunctionTerm(
-            return_dtype=self._transform_data_type_token(data_type_token),
-            name=identifier_token.value,
-            args=list_of_args,
-            body=body,
+            return_dtype=self._parse_data_type(),
+            name=self._expect(IdentifierToken).value,
+            args=self._parse_list_of_func_args(),
+            body=self._parse_body(),
         )
 
     def _parse_list_of_func_args(self) -> List[FunctionArgumentTerm]:
-        self._expect(SquareLparenToken)
-
-        args = []
-        while not isinstance(self._current_token, SquareRparenToken):
-            args.append(self._parse_func_arg())
-
-            if isinstance(self._current_token, SquareRparenToken):
-                break
-
-            self._expect(CommaToken)
-
-        self._expect(SquareRparenToken)
-
-        return args
+        return self._parse_comma_separated_list(SquareLparenToken, SquareRparenToken, self._parse_func_arg)
 
     def _parse_func_arg(self) -> FunctionArgumentTerm:
         identifier_token = self._expect(IdentifierToken)
         self._expect(ColonToken)
-        data_type_token = self._expect(DataTypeToken)
 
-        return FunctionArgumentTerm(name=identifier_token.value, dtype=self._transform_data_type_token(data_type_token))
+        return FunctionArgumentTerm(
+            name=identifier_token.value,
+            dtype=self._parse_data_type(),
+        )
 
     def _parse_return(self) -> ReturnTerm:
         self._expect(ReturnToken)
@@ -210,9 +237,8 @@ class Parser:
 
         return ReturnTerm(expr=expr)
 
+    @set_context(ParserContext.IN_CYCLE)
     def _parse_for(self) -> ForTerm:
-        self._enter_context(ParserContext.IN_CYCLE)
-
         self._expect(ForToken)
 
         self._expect(SquareLparenToken)
@@ -237,11 +263,7 @@ class Parser:
 
         self._expect(SquareRparenToken)
 
-        body = self._parse_body()
-
-        self._exit_context()
-
-        return ForTerm(start=start, condition=condition, end=end, body=body)
+        return ForTerm(start=start, condition=condition, end=end, body=self._parse_body())
 
     def _parse_continue(self) -> ContinueTerm:
         self._expect(ContinueToken)
@@ -260,8 +282,8 @@ class Parser:
         return self._parse_branch_with_condition()
 
     def _parse_branch_with_condition(self) -> BranchTerm:
-        condition: ExpressionTerm = self._parse_if_condition()
-        body: List[Term] = self._parse_body()
+        condition = self._parse_if_condition()
+        body = self._parse_body()
 
         next_branch = None
         if isinstance(self._current_token, ElifToken):
@@ -273,13 +295,11 @@ class Parser:
 
     def _parse_else(self) -> BranchTerm:
         self._expect(ElseToken)
-        body: List[Term] = self._parse_body()
-
-        return BranchTerm(condition=None, body=body, next_branch=None)
+        return BranchTerm(condition=None, body=self._parse_body(), next_branch=None)
 
     def _parse_if_condition(self) -> ExpressionTerm:
         self._expect(SquareLparenToken)
-        condition: ExpressionTerm = self._parse_expr()
+        condition = self._parse_expr()
         self._expect(SquareRparenToken)
 
         return condition
@@ -287,7 +307,7 @@ class Parser:
     def _parse_body(self) -> List[Term]:
         self._expect(CurlyLparenToken)
 
-        terms: List[Term] = []
+        terms = []
         while not isinstance(self._current_token, CurlyRparenToken):
             terms.append(self._parse_term_node())
 
@@ -297,9 +317,7 @@ class Parser:
 
     def _parse_print(self) -> PrintTerm:
         self._expect(PrintToken)
-        args = self._parse_list_of_exps()
-
-        return PrintTerm(args=args)
+        return PrintTerm(args=self._parse_list_of_exprs())
 
     def _parse_identifier_node(self) -> Union[FunctionCallTerm, VariableAssignmentTerm, VariableDefinitionTerm]:
         transitions = {
@@ -316,26 +334,13 @@ class Parser:
         self._throw_unexpected_token_error(next_token)
 
     def _parse_function_call(self) -> FunctionCallTerm:
-        variable_name_token = self._expect(IdentifierToken)
-        args = self._parse_list_of_exps()
+        return FunctionCallTerm(
+            name=self._expect(IdentifierToken).value,
+            args=self._parse_list_of_exprs(),
+        )
 
-        return FunctionCallTerm(name=variable_name_token.value, args=args)
-
-    def _parse_list_of_exps(self) -> List[ExpressionTerm]:
-        self._expect(LparenToken)
-
-        args = []
-        while not isinstance(self._current_token, RparenToken):
-            args.append(self._parse_expr())
-
-            if isinstance(self._current_token, RparenToken):
-                break
-
-            self._expect(CommaToken)
-
-        self._expect(RparenToken)
-
-        return args
+    def _parse_list_of_exprs(self) -> List[ExpressionTerm]:
+        return self._parse_comma_separated_list(LparenToken, RparenToken, self._parse_expr)
 
     def _parse_variable_assign(self) -> VariableAssignmentTerm:
         variable_name_token = self._expect(IdentifierToken)
@@ -350,12 +355,12 @@ class Parser:
         variable_name_token = self._expect(IdentifierToken)
         self._expect(ColonToken)
 
-        data_type_token = self._expect(DataTypeToken)
+        data_type = self._parse_data_type()
         self._expect(AssignToken)
 
         return VariableDefinitionTerm(
             name=variable_name_token.value,
-            dtype=self._transform_data_type_token(data_type_token),
+            dtype=data_type,
             value=self._parse_variable_value_node(),
         )
 
@@ -381,25 +386,25 @@ class Parser:
     def _parse_expr(self) -> ExpressionTerm:
         return self._parse_boolean_or()
 
-    def _parse_boolean_or(self) -> ExpressionTerm:
-        expr = self._parse_boolean_and()
+    def _parse_binary_op_expression(
+        self,
+        parse_next_level: Callable[[], ExpressionTerm],
+        operations_map: Dict[Token, Union[ArithmeticOperator, LogicalOperator, ComparisonOperator, BitwiseOperator]],
+    ) -> ExpressionTerm:
+        expr = parse_next_level()
 
-        while isinstance(self._current_token, OrToken):
+        while (op_type := operations_map.get(type(self._current_token))) is not None:
             self._advance()
-            right = self._parse_boolean_and()
-            expr = BinOpTerm(left=expr, op=LogicalOperator.OR, right=right)
+            right = parse_next_level()
+            expr = BinOpTerm(left=expr, op=op_type, right=right)
 
         return expr
+
+    def _parse_boolean_or(self) -> ExpressionTerm:
+        return self._parse_binary_op_expression(self._parse_boolean_and, {OrToken: LogicalOperator.OR})
 
     def _parse_boolean_and(self) -> ExpressionTerm:
-        expr = self._parse_boolean_not()
-
-        while isinstance(self._current_token, AndToken):
-            self._advance()
-            right = self._parse_boolean_not()
-            expr = BinOpTerm(left=expr, op=LogicalOperator.AND, right=right)
-
-        return expr
+        return self._parse_binary_op_expression(self._parse_boolean_not, {AndToken: LogicalOperator.AND})
 
     def _parse_boolean_not(self) -> ExpressionTerm:
         if isinstance(self._current_token, NotToken):
@@ -410,77 +415,24 @@ class Parser:
         return self._parse_comparison()
 
     def _parse_comparison(self) -> ExpressionTerm:
-        operations = {
-            EqualToken: ComparisonOperator.EQ,
-            NotEqualToken: ComparisonOperator.NEQ,
-            LessToken: ComparisonOperator.LT,
-            LessOrEqualToken: ComparisonOperator.LTE,
-            GreaterToken: ComparisonOperator.GT,
-            GreaterOrEqualToken: ComparisonOperator.GTE,
-        }
-
-        left = self._parse_arithmetic_expr()
-
-        op = operations.get(type(self._current_token))
-        if op is not None:
-            self._advance()
-            right = self._parse_arithmetic_expr()
-
-            return BinOpTerm(left=left, op=op, right=right)
-
-        return left
+        return self._parse_binary_op_expression(self._parse_arithmetic_expr, self._COMPARE_OPERATIONS_MAP)
 
     def _parse_arithmetic_expr(self) -> ExpressionTerm:
-        operations = {
-            PlusToken: ArithmeticOperator.ADD,
-            MinusToken: ArithmeticOperator.SUB,
-        }
-
-        if isinstance(self._current_token, MinusToken):
-            self._advance()
-            expr = self._parse_arithmetic_expr()
-            return UnaryOpTerm(op=ArithmeticOperator.SUB, expr=expr)
-
-        expr = self._parse_addendum()
-
-        while (op := operations.get(type(self._current_token))) is not None:
-            self._advance()
-            right = self._parse_arithmetic_expr()
-
-            expr = BinOpTerm(left=expr, op=op, right=right)
-
-        return expr
+        return self._parse_binary_op_expression(self._parse_addendum, self._ADDITIVE_OPERATIONS_MAP)
 
     def _parse_addendum(self) -> ExpressionTerm:
-        operations = {
-            AsteriskToken: ArithmeticOperator.MUL,
-            SlashToken: ArithmeticOperator.DIV,
-            PercentToken: ArithmeticOperator.MOD,
-        }
-
-        expr = self._parse_factor()
-
-        while (op := operations.get(type(self._current_token))) is not None:
-            self._advance()
-            right = self._parse_addendum()
-            expr = BinOpTerm(left=expr, op=op, right=right)
-
-        return expr
+        return self._parse_binary_op_expression(self._parse_factor, self._MULTIPLICATIVE_OPERATIONS_MAP)
 
     def _parse_factor(self) -> ExpressionTerm:
-        operations = {
-            ShiftLeftToken: BitwiseOperator.SHL,
-            ShiftRightToken: BitwiseOperator.SHR,
-        }
+        return self._parse_binary_op_expression(self._parse_unary_expression, self._BITWISE_OPERATIONS_MAP)
 
-        expr = self._parse_bitwise_operand()
-
-        while (op := operations.get(type(self._current_token))) is not None:
+    def _parse_unary_expression(self) -> ExpressionTerm:
+        if isinstance(self._current_token, MinusToken):
             self._advance()
-            right = self._parse_factor()
-            expr = BinOpTerm(left=expr, op=op, right=right)
+            expr = self._parse_unary_expression()
+            return UnaryOpTerm(op=ArithmeticOperator.SUB, expr=expr)
 
-        return expr
+        return self._parse_bitwise_operand()
 
     def _parse_bitwise_operand(self) -> ExpressionTerm:
         if isinstance(self._current_token, LparenToken):
@@ -508,6 +460,29 @@ class Parser:
 
         self._throw_unexpected_token_error(token)
 
+    def _parse_comma_separated_list(
+        self,
+        start_token_type: Type[Token],
+        end_token_type: Type[Token],
+        parse_item_func: Callable,
+    ) -> List[Term]:
+        self._expect(start_token_type)
+
+        items = []
+        if not isinstance(self._current_token, end_token_type):
+            items.append(parse_item_func())
+
+            while isinstance(self._current_token, CommaToken):
+                self._advance()
+                items.append(parse_item_func())
+
+        self._expect(end_token_type)
+
+        return items
+
+    def _parse_data_type(self) -> DataTypes:
+        return self._DATA_TYPE_TOKEN_MAP[type(self._expect(DataTypeToken))]
+
     def _parse_number_literal(self) -> NumberLiteralTerm:
         return NumberLiteralTerm(value=int(self._expect(NumberToken).value))
 
@@ -516,15 +491,6 @@ class Parser:
 
     def _parse_variable(self) -> VariableTerm:
         return VariableTerm(name=self._expect(IdentifierToken).value)
-
-    def _transform_data_type_token(self, data_type_token) -> DataTypes:
-        dtypes = {
-            StringDataTypeToken: DataTypes.STR,
-            IntegerDataTypeToken: DataTypes.INT,
-            VoidDataTypeToken: DataTypes.VOID,
-        }
-
-        return dtypes[type(data_type_token)]
 
     def _throw_unexpected_token_error(self, token: Optional[Token] = None):
         if token is None:

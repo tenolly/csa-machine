@@ -390,13 +390,13 @@ test_cases = [
             end=VariableAssignmentTerm(
                 name="a",
                 value=BinOpTerm(
-                    left=VariableTerm(name="a"),
-                    op=ArithmeticOperator.ADD,
-                    right=BinOpTerm(
-                        left=VariableTerm(name="b"),
+                    left=BinOpTerm(
+                        left=VariableTerm(name="a"),
                         op=ArithmeticOperator.ADD,
-                        right=NumberLiteralTerm(value=1),
+                        right=VariableTerm(name="b"),
                     ),
+                    op=ArithmeticOperator.ADD,
+                    right=NumberLiteralTerm(value=1),
                 ),
             ),
             body=[
@@ -414,7 +414,9 @@ test_cases = [
                         op=ComparisonOperator.EQ,
                         right=NumberLiteralTerm(value=0),
                     ),
-                    body=[ContinueTerm()],
+                    body=[
+                        ContinueTerm(),
+                    ],
                     next_branch=None,
                 ),
                 PrintTerm(
