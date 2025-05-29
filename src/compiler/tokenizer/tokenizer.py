@@ -202,17 +202,6 @@ class Tokenizer:
         self.tokens: List[Token] = []
 
     def _advance(self, n: int = 1) -> Optional[str]:
-        """
-        Increase the character counter and returns a character at the new index
-        if there are still characters available. Otherwise, returns None.
-
-        Args:
-            n: index shift, can be negative (default 1)
-
-        Returns:
-            Chracter at the new index or None.
-        """
-
         self._current_index += n
 
         if 0 <= self._current_index < len(self._program):
@@ -223,32 +212,12 @@ class Tokenizer:
         return self._current_char
 
     def _peek(self, n: int = 1) -> Optional[str]:
-        """
-        Returns the next character, without incrementing the counter. If there are no available characters, returns None.
-
-        Args:
-            n: index shift, can be negative (default 1)
-
-        Returns:
-            Next character or None.
-        """
-
         next_index = self._current_index + n
 
         if 0 <= next_index < len(self._program):
             return self._program[next_index]
 
     def tokenize(self) -> List[Token]:
-        """
-        Converts the program to a list of tokens and returns it.
-
-        Returns:
-            List of tokens.
-
-        Raises:
-            TokenizeException: program is incorrect.
-        """
-
         transitions = {
             DIGITS: self._parse_number,
             QUOTES: self._parse_string,
@@ -273,13 +242,6 @@ class Tokenizer:
         return self.tokens
 
     def _parse_sign(self) -> None:
-        """
-        Parses and creates character token.
-
-        Raises:
-            TokenizeException: undefined token.
-        """
-
         first_char = self._current_char
         second_char = self._advance()
 
@@ -297,13 +259,6 @@ class Tokenizer:
         self.tokens.append(token_cls())
 
     def _parse_word(self) -> None:
-        """
-        Parses and creates reserved word or identifier token.
-
-        Raises:
-            TokenizeException: undefined token.
-        """
-
         word = ""
 
         while self._current_char in CHARACTERS + DIGITS:
@@ -332,13 +287,6 @@ class Tokenizer:
         self.tokens.append(token)
 
     def _parse_number(self) -> None:
-        """
-        Parses and creates number token.
-
-        Raises:
-            TokenizeException: incorrect token.
-        """
-
         token = ""
 
         while self._current_char in DIGITS:
@@ -348,13 +296,6 @@ class Tokenizer:
         self.tokens.append(NumberToken(token))
 
     def _parse_string(self) -> None:
-        """
-        Parses and creates string token.
-
-        Raises:
-            TokenizeException: incorrect token.
-        """
-
         token = ""
 
         while True:
@@ -372,82 +313,33 @@ class Tokenizer:
         self.tokens.append(StringToken(token))
 
     def _skip_comment(self) -> None:
-        """
-        Skips the entire comment token and creates nothing.
-        """
-
         while self._advance() is not None:
             if self._current_char == NEW_LINE:
                 self._advance()
                 break
 
     def _skip_char(self) -> None:
-        """
-        Skips meaningless character and creates nothing.
-        """
-
         self._advance()
 
     def _throw_unexpected_char_error(self) -> NoReturn:
-        """
-        Throws an “unexpected character” exception. The error message contains the current character,
-        the index of that character, and the program fragment where the error occurred.
-
-        Raises:
-            TokenizeException: unexpected char.
-        """
-
         raise TokenizeException(
             f"unexpected char {repr(self._current_char)} at {self._current_index} index "
             f"(look at fragment {self._get_program_fragment()}).",
         )
 
     def _throw_undefined_token_error(self, token: str) -> NoReturn:
-        """
-        Throws an “undefined token” exception. The error message contains the undefined token,
-        the index of that token, and the program fragment where the error occurred.
-
-        Args:
-            token: Token that couldn't be parsed.
-
-        Raises:
-            TokenizeException: undefined token.
-        """
-
         raise TokenizeException(
             f"undefined token {token} at {self._current_index} index "
             f"(look at fragment {self._get_program_fragment()}).",
         )
 
     def _throw_incorrect_token_error(self, token: str) -> NoReturn:
-        """
-        Throws an incorrect token” exception. The error message contains the incorrect token,
-        the index of that token, and the program fragment where the error occurred.
-
-        Args:
-            token: Token that contains an error.
-
-        Raises:
-            TokenizeException: incorrect token.
-        """
-
         raise TokenizeException(
             f"incorrect token {token} at {self._current_index} index "
             f"(look at fragment {self._get_program_fragment()}).",
         )
 
     def _get_program_fragment(self, indent: int = 20) -> str:
-        """
-        Returns a program fragment from the [current_index - indent; current_index + indent) range.
-        Used for more detailed error output.
-
-        Args:
-            indent: Indentation from the current index.
-
-        Returns:
-            the program fragment.
-        """
-
         fragment_start = max(0, self._current_index - indent)
         fragment_end = min(len(self._program), self._current_index + indent)
 
