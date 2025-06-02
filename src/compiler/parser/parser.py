@@ -61,11 +61,12 @@ from .terms import (
     ForTerm,
     FunctionArgumentTerm,
     FunctionCallTerm,
-    FunctionTerm,
+    FunctionDefinitionTerm,
     InputTerm,
     LogicalOperator,
     NumberLiteralTerm,
     PrintTerm,
+    ProgramTerm,
     ReturnTerm,
     StringLiteralTerm,
     Term,
@@ -182,7 +183,7 @@ class Parser:
         while self._current_token is not None:
             self.terms.append(self._parse_term_node())
 
-        return self.terms
+        return ProgramTerm(terms=self.terms)
 
     def _parse_term_node(self) -> Term:
         transitions = {
@@ -207,8 +208,8 @@ class Parser:
         self._throw_unexpected_token_error()
 
     @set_context(ParserContext.IN_FUNCTION)
-    def _parse_func_def(self) -> FunctionTerm:
-        return FunctionTerm(
+    def _parse_func_def(self) -> FunctionDefinitionTerm:
+        return FunctionDefinitionTerm(
             return_dtype=self._parse_data_type(),
             name=self._expect(IdentifierToken).value,
             args=self._parse_list_of_func_args(),

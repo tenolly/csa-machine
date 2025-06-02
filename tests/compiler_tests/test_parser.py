@@ -15,7 +15,7 @@ from src.compiler.parser.terms import (
     ForTerm,
     FunctionArgumentTerm,
     FunctionCallTerm,
-    FunctionTerm,
+    FunctionDefinitionTerm,
     InputTerm,
     LogicalOperator,
     NumberLiteralTerm,
@@ -37,7 +37,7 @@ def get_tokens(program: str) -> List[Token]:
 
 
 def parse_first_term(program: str) -> Term:
-    return Parser(get_tokens(program)).parse()[0]
+    return Parser(get_tokens(program)).parse().terms[0]
 
 
 test_cases = [
@@ -179,7 +179,7 @@ test_cases = [
     # Functions
     (
         "int sum[a:int, b:int] { return: a + b }",
-        FunctionTerm(
+        FunctionDefinitionTerm(
             return_dtype=DataTypes.INT,
             name="sum",
             args=[
@@ -205,7 +205,7 @@ test_cases = [
     ),
     (
         "void print10[] { print(10) }",
-        FunctionTerm(
+        FunctionDefinitionTerm(
             return_dtype=DataTypes.VOID,
             name="print10",
             args=[],
@@ -220,7 +220,7 @@ test_cases = [
     ),
     (
         "void do_nothing[string:str] { }",
-        FunctionTerm(
+        FunctionDefinitionTerm(
             return_dtype=DataTypes.VOID,
             name="do_nothing",
             args=[

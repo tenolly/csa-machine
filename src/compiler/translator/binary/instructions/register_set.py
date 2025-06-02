@@ -1,0 +1,38 @@
+from .core import Register
+
+SP = Register("SP", "00000")
+RA = Register("RA", "00001")
+
+S1 = Register("S1", "00010")
+S2 = Register("S2", "00011")
+S3 = Register("S3", "00100")
+S4 = Register("S4", "00101")
+S5 = Register("S5", "00110")
+S6 = Register("S6", "00111")
+S7 = Register("S7", "01000")
+S8 = Register("S8", "01001")
+S9 = Register("S9", "01010")
+S10 = Register("S10", "01011")
+S11 = Register("S11", "01100")
+S12 = Register("S12", "01101")
+S13 = Register("S13", "01110")
+S14 = Register("S14", "01111")
+
+L1 = Register("L1", "10000")
+L2 = Register("L2", "10001")
+
+T1 = Register("T1", "10010")
+T2 = Register("T2", "10011")
+T3 = Register("T3", "10100")
+T4 = Register("T4", "10101")
+T5 = Register("T5", "10110")
+T6 = Register("T6", "10111")
+
+A1 = Register("A1", "11000")
+A2 = Register("A2", "11001")
+A3 = Register("A3", "11010")
+A4 = Register("A4", "11011")
+A5 = Register("A5", "11100")
+A6 = Register("A6", "11101")
+A7 = Register("A7", "11110")
+A8 = Register("A8", "11111")

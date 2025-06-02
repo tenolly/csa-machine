@@ -48,6 +48,11 @@ class ExpressionTerm(Term):
 
 
 @dataclass
+class ProgramTerm(Term):
+    terms: List[Term]
+
+
+@dataclass
 class InputTerm(Term):
     count: Optional[int] = None
 
@@ -116,7 +121,7 @@ class ReturnTerm(Term):
 
 
 @dataclass
-class FunctionTerm(Term):
+class FunctionDefinitionTerm(Term):
     return_dtype: DataTypes
     name: str
     args: List[FunctionArgumentTerm]
