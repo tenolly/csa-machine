@@ -1,27 +1,27 @@
 from typing import List
 
-from .constants import CHAR_SIZE, WORD_SIZE
+from isa.constants import CHAR_SIZE, WORD_SIZE
 
 
 class Word:
     @classmethod
     def from_integer(cls, value: int) -> str:
-        bincode = bin(value)[2:]
+        bincode = bin(value)[2:].rjust(WORD_SIZE, "0")
 
-        if bincode > WORD_SIZE:
+        if len(bincode) > WORD_SIZE:
             raise ValueError(f"bit representation of {value} is too long (expected {WORD_SIZE}, got {len(bincode)})")
 
         return cls._little_endian(bincode)
 
     @classmethod
     def from_string(cls, value: str) -> List[str]:
-        bincode = bin(value)[2:]
+        bincode = bin(value)[2:].rjust(WORD_SIZE, "0")
 
         bits = ""
         for character in value:
             bincode = bin(ord(character))[2:]
 
-            if bincode > CHAR_SIZE:
+            if len(bincode) > CHAR_SIZE:
                 raise ValueError(
                     f"bit representation of {character} is too long (expected {CHAR_SIZE}, got {len(bincode)})",
                 )

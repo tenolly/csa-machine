@@ -1,5 +1,7 @@
-CHAR_SIZE = 8
+# Words
+CHAR_SIZE = 32
 WORD_SIZE = 32
 
+# Instruction
 REG_ID_SIZE = 5
 INSTR_OPCODE_SIZE = 7

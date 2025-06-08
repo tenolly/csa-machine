@@ -5,4 +5,3 @@ __pycache__
 .pytest_cache
 
 examples/beta
-src/main.py

@@ -216,8 +216,8 @@ class StringDataTypeToken(DataTypeToken):
 
 
 @dataclass(frozen=True)
-class IntegerDataTypeToken(DataTypeToken):
-    value: str = "int"
+class Integer32DataTypeToken(DataTypeToken):
+    value: str = "int32"
 
 
 @dataclass(frozen=True)

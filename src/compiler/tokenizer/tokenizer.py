@@ -20,7 +20,7 @@ from .tokens import (
     IdentifierToken,
     IfToken,
     InputToken,
-    IntegerDataTypeToken,
+    Integer32DataTypeToken,
     LessOrEqualToken,
     LessToken,
     LparenToken,
@@ -75,7 +75,7 @@ LOGICAL_OPERATIONS = (
 
 DATA_TYPES = (
     STR_DATA_TYPE := "str",
-    INT_DATA_TYPE := "int",
+    INT32_DATA_TYPE := "int32",
     VOID_DATA_TYPE := "void",
 )
 
@@ -162,7 +162,7 @@ class Tokenizer:
 
     _DATA_TYPE_TO_TOKEN = {
         STR_DATA_TYPE: StringDataTypeToken,
-        INT_DATA_TYPE: IntegerDataTypeToken,
+        INT32_DATA_TYPE: Integer32DataTypeToken,
         VOID_DATA_TYPE: VoidDataTypeToken,
     }
 

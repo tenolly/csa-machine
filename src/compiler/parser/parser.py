@@ -22,7 +22,7 @@ from ..tokenizer.tokens import (
     IdentifierToken,
     IfToken,
     InputToken,
-    IntegerDataTypeToken,
+    Integer32DataTypeToken,
     LessOrEqualToken,
     LessToken,
     LparenToken,
@@ -100,7 +100,7 @@ def set_context(context: ParserContext):
 class Parser:
     _DATA_TYPE_TOKEN_MAP = {
         StringDataTypeToken: DataTypes.STR,
-        IntegerDataTypeToken: DataTypes.INT,
+        Integer32DataTypeToken: DataTypes.INT32,
         VoidDataTypeToken: DataTypes.VOID,
     }
 

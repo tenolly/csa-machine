@@ -38,12 +38,15 @@ from .binary.instructions.instruction_set import (
     LoadLowerImmediate,
     LoadUpperImmediate,
     LoadWord,
+    LoadWordFromRegister,
     LogicalAnd,
     LogicalNot,
     LogicalOr,
     Move,
     Negative,
+    ReturnFromInterruption,
     SaveWord,
+    SaveWordToRegister,
     SetIfEqual,
     SetIfGreaterOrEqual,
     SetIfLessOrEqual,
@@ -51,6 +54,7 @@ from .binary.instructions.instruction_set import (
     SetIfStrictlyGreater,
     SetIfStrictlyLess,
     SignedAddition,
+    SignedAdditionImmediate,
     SignedDivision,
     SignedMultiply,
     SignedRemainder,
@@ -58,8 +62,8 @@ from .binary.instructions.instruction_set import (
 )
 from .binary.instructions.instruction_types import BaseInstruction
 from .binary.instructions.register_set import (
-    L1,
-    L2,
+    I1,
+    I2,
     S1,
     S2,
     S3,
@@ -72,22 +76,31 @@ from .binary.instructions.register_set import (
     S10,
     S11,
     S12,
-    S13,
-    S14,
     T1,
     T2,
     T3,
     T4,
     T5,
     T6,
+    T7,
+    T8,
 )
+from .binary.transform import to_bytes
+from .binary.word import Word
 from .exceptions import RegisterManagementException, TranslateException
+
+################################
+#         ! ATTENTION !        #
+################################
+# The code below is disgusting #
+# TODO: do a total refactoring #
+################################
 
 
 @dataclass
 class Section:
     prefix: str
-    start_addr: int
+    start_addr: Addr
     instructions: List[LazyInstruction]
 
 
@@ -98,7 +111,18 @@ class Variable:
 
 
 @dataclass
+class VariableRelativeAddr:
+    variable: Variable
+    offset: int
+
+
+@dataclass
 class Offset:
+    value: int
+
+
+@dataclass
+class Addr:
     value: int
 
 
@@ -114,8 +138,10 @@ class LazyInstruction:
         for arg in self.args:
             if isinstance(arg, Variable):
                 args.append(Value(arg.addr))
-            elif isinstance(arg, Offset):
+            elif isinstance(arg, Offset) or isinstance(arg, Addr):
                 args.append(Value(arg.value))
+            elif isinstance(arg, VariableRelativeAddr):
+                args.append(Value(arg.variable.addr + arg.offset))
             else:
                 args.append(arg)
 
@@ -126,6 +152,9 @@ class MemoryManager:
     def __init__(self):
         self.constants: Dict[str, Variable] = {}
         self.variables: Dict[str, Variable] = {}
+        self.io_data_read_addr: Addr = Addr(-1)
+        self.io_data_addr: Addr = Addr(-1)
+        self.io_data: Variable = Variable(-1, "0" * 1024)
 
     def get_variable(self, variable_label: str) -> Optional[Variable]:
         if variable_label in self.constants:
@@ -134,14 +163,14 @@ class MemoryManager:
         if variable_label in self.variables:
             return self.variables[variable_label]
 
-    def create_constant(self, variable_label: Optional[str], variable_value: Union[int, str, None]) -> None:
+    def create_constant(self, variable_label: Optional[str], variable_value: Union[int, str]) -> Variable:
         if variable_label is None:
             variable_label = f"literal_{len(self.constants)}"
 
         self.constants[variable_label] = Variable(-1, variable_value)
         return self.constants[variable_label]
 
-    def create_variable(self, variable_label: Optional[str], variable_value: Union[int, str, None]) -> None:
+    def create_variable(self, variable_label: Optional[str], variable_value: Union[int, str]) -> Variable:
         if variable_label is None:
             variable_label = f"literal_{len(self.variables)}"
 
@@ -151,11 +180,12 @@ class MemoryManager:
 
 class RegistersManager:
     def __init__(self):
-        self.first_load_temp_register: Register = T5
-        self.second_load_temp_register: Register = T6
-        self.loop_registers: List[Register] = [L1, L2]
-        self.temp_registers: List[Register] = [T1, T2, T3, T4]
-        self.saved_registers: List[Register] = [S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14]
+        self.first_interrupt_register: Register = I1
+        self.second_interrupt_register: Register = I2
+        self.first_load_temp_register: Register = T7
+        self.second_load_temp_register: Register = T8
+        self.temp_registers: List[Register] = [T1, T2, T3, T4, T5, T6]
+        self.saved_registers: List[Register] = [S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12]
 
         self.occupied_registers: Dict[Register, str] = {}
 
@@ -173,12 +203,6 @@ class RegistersManager:
     def find_free_saved_register(self) -> Optional[Register]:
         used_registers = set(self.occupied_registers.keys())
         for register in self.saved_registers:
-            if register not in used_registers:
-                return register
-
-    def find_free_loop_register(self) -> Optional[Register]:
-        used_registers = set(self.occupied_registers.keys())
-        for register in self.loop_registers:
             if register not in used_registers:
                 return register
 
@@ -211,33 +235,110 @@ class Translator:
     def __init__(self, program_ast: ProgramTerm):
         self.program_ast: ProgramTerm = program_ast
 
-        self.interrupt_vectors: List[str] = []
-        self.input_port_addr: int = 0x10
-        self.output_port_addr: int = 0x11
-        self.program: Section = Section("_start", -1, [])
-
-        # TODO: add feature
-        # self.functions: Dict[str, Section] = {}
-
-        self.sections_stack: List[Section] = [self.program]
-
         self.memory_manager: MemoryManager = MemoryManager()
         self.register_manager: RegistersManager = RegistersManager()
 
-    def translate(self) -> List[BaseInstruction]:
+        self.input_port_addr: int = 0x10
+        self.output_port_addr: int = 0x11
+        self.program_start_addr: int = 0x1000
+
+        self.interrupt_vectors: List[Addr] = []
+        self.functions: Dict[str, Section] = {}
+        self._init_default_interrupt_vectors()
+
+        self.program: Section = Section("_start", Addr(-1), [])
+        self.sections_stack: List[Section] = [self.program]
+
+    def _init_default_interrupt_vectors(self) -> None:
+        default_interrupt_handler_addr = Addr(-1)
+        default_interrupt_handler = Section("d_int", default_interrupt_handler_addr, [])
+        default_interrupt_handler.instructions.append(LazyInstruction(ReturnFromInterruption))
+        self.functions[default_interrupt_handler.prefix] = default_interrupt_handler
+
+        char_reg = self.register_manager.first_interrupt_register
+        input_addr_reg = self.register_manager.second_interrupt_register
+
+        input_interrupt_handler_addr = Addr(-1)
+        input_interrupt_handler = Section("input_int", input_interrupt_handler_addr, [])
+        input_interrupt_handler.instructions.extend([
+            LazyInstruction(LoadLowerImmediate, input_addr_reg, self.memory_manager.io_data_addr),
+            LazyInstruction(LoadUpperImmediate, input_addr_reg, self.memory_manager.io_data_addr),
+            LazyInstruction(LoadWord, char_reg, Addr(self.input_port_addr)),
+            LazyInstruction(SaveWordToRegister, char_reg, input_addr_reg),
+            LazyInstruction(SignedAdditionImmediate, input_addr_reg, Value(1)),
+            LazyInstruction(SaveWord, input_addr_reg, self.memory_manager.io_data_addr),
+            LazyInstruction(ReturnFromInterruption),
+        ])
+        self.functions[input_interrupt_handler.prefix] = input_interrupt_handler
+
+        for _ in range(15):
+            self.interrupt_vectors.append(default_interrupt_handler_addr)
+
+        self.interrupt_vectors.append(input_interrupt_handler_addr)
+
+    def translate(self) -> bytes:
         for ast_node in self.program_ast.terms:
             self.program.instructions.extend(self._translate_root_ast_node(ast_node))
-
         self.program.instructions.append(LazyInstruction(Halt))
 
-        data_addr = self.output_port_addr + 1
-        for variable in self.memory_manager.constants.values():
-            variable.addr = data_addr
-            data_addr += 1
+        self._process_addresses()
 
-        for variable in self.memory_manager.variables.values():
-            variable.addr = data_addr
-            data_addr += 1
+        program_instructions = [instr.produce() for instr in self.program.instructions]
+        functions = [
+            [instr.produce() for instr in func_section.instructions]
+            for func_section in self.functions.values()
+        ]
+
+        bits = []
+        for interrupt_vector in self.interrupt_vectors:
+            bits.append(Word.from_integer(interrupt_vector.value))
+
+        bits.append(Word.from_integer(self.input_port_addr))
+        bits.append(Word.from_integer(self.output_port_addr))
+
+        for instruction in program_instructions:
+            bits.append(Word.from_instruction(instruction.bits()))
+
+        for func_instructions in functions:
+            for instruction in func_instructions:
+                bits.append(Word.from_instruction(instruction.bits()))
+
+        bytes_gen = map(to_bytes, bits)
+        bytes_representation = next(bytes_gen)
+        for b_part in bytes_gen:
+            bytes_representation += b_part
+
+        return bytes_representation
+
+    def _process_addresses(self) -> None:
+        data_addr = self.output_port_addr + 1
+        for variables_dict in (self.memory_manager.constants, self.memory_manager.variables):
+            for variable in variables_dict.values():
+                variable.addr = data_addr
+                if isinstance(variable.value, int):
+                    data_addr += 1
+                elif isinstance(variable.value, str):
+                    data_addr += len(variable.value)
+                else:
+                    raise TranslateException(f"unexpected variable value {variable.value} (variable: {variable!r})")
+
+        data_addr += 2
+
+        self.memory_manager.io_data_addr.value = data_addr
+        self.memory_manager.io_data_read_addr.value = data_addr
+        self.memory_manager.io_data.addr = data_addr
+
+        memory_end_addr = data_addr + len(self.memory_manager.io_data.value) + 1
+        if memory_end_addr > self.program_start_addr:
+            raise TranslateException(f"memory out (max {self.program_start_addr}, got {memory_end_addr})")
+
+        program_addr = self.program_start_addr
+        self.program.start_addr.value = program_addr
+
+        program_addr += len(self.program.instructions) + 1
+        for function in self.functions.values():
+            function.start_addr.value = program_addr
+            program_addr += len(function.instructions) + 1
 
     def _translate_root_ast_node(self, ast_node: Term) -> List[LazyInstruction]:
         transitions = {
@@ -305,7 +406,7 @@ class Translator:
                 self.register_manager.take_register(register_to_save, variable_name)
                 self.register_manager.free_temp_register(register_or_variable)
             else:
-                variable = self.memory_manager.create_variable(variable_name, None)
+                variable = self.memory_manager.create_variable(variable_name, 0)
                 variable_instructions.append(LazyInstruction(SaveWord, register_or_variable, variable))
                 self.register_manager.free_temp_register(register_or_variable)
         elif isinstance(register_or_variable, Variable):
@@ -339,9 +440,9 @@ class Translator:
 
         condition_instructions = []
         if ast_node.condition is not None:
-            offset_to_end = Offset(len(body_instructions) + 1)
+            offset_to_end = Offset(len(body_instructions))
 
-            register_or_variable = self._translate_variable_value_node(ast_node.condition, condition_instructions)
+            register_or_variable = self._translate_expression(ast_node.condition, condition_instructions)
             if isinstance(register_or_variable, Register):
                 condition_instructions.append(LazyInstruction(JumpIfZero, offset_to_end))
             elif isinstance(register_or_variable, Variable):
@@ -378,7 +479,7 @@ class Translator:
 
         body_instructions = []
 
-        register_or_variable = self._translate_variable_value_node(ast_node.condition, body_instructions)
+        register_or_variable = self._translate_expression(ast_node.condition, body_instructions)
         body_instructions.append(LazyInstruction(JumpIfZero, offset_to_end))
         offset_to_end.value -= len(body_instructions)
 
@@ -429,7 +530,40 @@ class Translator:
         return instructions
 
     def _translate_print(self, ast_node: PrintTerm) -> List[LazyInstruction]:
-        pass
+        instructions = []
+        for expr in ast_node.args:
+            register_or_variable = self._translate_expression(expr, instructions)
+            if isinstance(register_or_variable, Register):
+                instructions.append(LazyInstruction(SaveWord, register_or_variable, Addr(self.output_port_addr)))
+            elif isinstance(register_or_variable, Variable):
+                if isinstance(register_or_variable.value, int):
+                    instructions.extend([
+                        LazyInstruction(LoadWord, self.register_manager.first_load_temp_register, register_or_variable),
+                        LazyInstruction(
+                            SaveWord,
+                            self.register_manager.first_load_temp_register,
+                            Addr(self.output_port_addr),
+                        ),
+                    ])
+                elif isinstance(register_or_variable.value, str):
+                    string_addr_reg = self.register_manager.first_load_temp_register
+                    chars_reg = self.register_manager.second_load_temp_register
+                    instructions.extend([
+                        LazyInstruction(LoadLowerImmediate, string_addr_reg, register_or_variable),
+                        LazyInstruction(LoadUpperImmediate, string_addr_reg, register_or_variable),
+                        LazyInstruction(LoadWordFromRegister, chars_reg, string_addr_reg),
+                        LazyInstruction(SignedAdditionImmediate, chars_reg, Value(0)),
+                        LazyInstruction(JumpIfZero, Offset(4)),
+                        LazyInstruction(SaveWord, chars_reg, Addr(self.output_port_addr)),
+                        LazyInstruction(SignedAdditionImmediate, string_addr_reg, Value(4)),
+                        LazyInstruction(JumpOffset, Offset(-5)),
+                    ])
+                else:
+                    self._throw_semantic_exception(register_or_variable.value)
+            else:
+                self._throw_semantic_exception(register_or_variable)
+
+        return instructions
 
     def _translate_variable_value(
         self,
@@ -440,7 +574,7 @@ class Translator:
         if isinstance(ast_node, InputTerm):
             register_or_variable = self._translate_input(ast_node, instructions)
         elif isinstance(ast_node, ExpressionTerm):
-            register_or_variable = self._translate_variable_value_node(ast_node, instructions)
+            register_or_variable = self._translate_expression(ast_node, instructions)
         else:
             self._throw_semantic_exception(ast_node)
 
@@ -448,12 +582,49 @@ class Translator:
 
     def _translate_input(
         self,
-        ast_node: ExpressionTerm,
+        ast_node: InputTerm,
         instructions: List[LazyInstruction],
     ) -> Union[Register, Variable]:
-        pass
+        def read_word(instructions: List[LazyInstruction]) -> Register:
+            enabled_words_register = self.register_manager.first_load_temp_register
+            already_read_words_register = self.register_manager.second_load_temp_register
+            instructions.extend([
+                LazyInstruction(LoadLowerImmediate, enabled_words_register, self.memory_manager.io_data_addr),
+                LazyInstruction(LoadLowerImmediate, enabled_words_register, self.memory_manager.io_data_addr),
+                LazyInstruction(LoadLowerImmediate, already_read_words_register, self.memory_manager.io_data_read_addr),
+                LazyInstruction(LoadLowerImmediate, already_read_words_register, self.memory_manager.io_data_read_addr),
+                LazyInstruction(Compare, enabled_words_register, already_read_words_register),
+                LazyInstruction(JumpIfZero, Offset(-5)),
+                LazyInstruction(
+                    LoadWordFromRegister,
+                    inputed_word_register := enabled_words_register,
+                    already_read_words_register,
+                ),
+                LazyInstruction(SignedAdditionImmediate, already_read_words_register, Value(1)),
+                LazyInstruction(SaveWord, already_read_words_register, self.memory_manager.io_data_read_addr),
+            ])
+            return inputed_word_register
 
-    def _translate_variable_value_node(
+        if ast_node.count is None:
+            inputed_word_register = read_word(instructions)
+            register = self.register_manager.find_free_temp_register()
+            if register is not None:
+                instructions.append(Move, register, inputed_word_register)
+                self.register_manager.take_register(register)
+                return register
+            else:
+                variable = self.memory_manager.create_variable(None, 0)
+                instructions.append(SaveWord, inputed_word_register, variable)
+                return variable
+        else:
+            string_variable = self.memory_manager.create_constant(None, "0" * ast_node.count)
+            for i in range(ast_node.count):
+                inputed_word_register = read_word(instructions)
+                instructions.append(
+                    LazyInstruction(SaveWord, inputed_word_register, VariableRelativeAddr(string_variable, i)),
+                )
+
+    def _translate_expression(
         self,
         ast_node: ExpressionTerm,
         instructions: List[LazyInstruction],
@@ -500,8 +671,8 @@ class Translator:
         return self._get_variable_location_by_name(self._get_ident_name(ast_node.name))
 
     def _translate_bin_op(self, ast_node: BinOpTerm, instructions: List[LazyInstruction]) -> Union[Register, Variable]:
-        left = self._translate_variable_value_node(ast_node.left, instructions)
-        right = self._translate_variable_value_node(ast_node.right, instructions)
+        left = self._translate_expression(ast_node.left, instructions)
+        right = self._translate_expression(ast_node.right, instructions)
 
         if left in self.register_manager.temp_registers:
             left_register = left
@@ -558,7 +729,7 @@ class Translator:
             instructions.append(LazyInstruction(instr_class, result_register))
 
         if result_register == self.register_manager.first_load_temp_register:
-            variable = self.memory_manager.create_variable(None, None)
+            variable = self.memory_manager.create_variable(None, 0)
             instructions.append(LazyInstruction(SaveWord, self.register_manager.first_load_temp_register, variable))
             return variable
 

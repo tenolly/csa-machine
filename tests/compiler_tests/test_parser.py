@@ -61,8 +61,8 @@ test_cases = [
 
     # Variable Definitions
     (
-        "variable:int = input()",
-        VariableDefinitionTerm(name="variable", dtype=DataTypes.INT, value=InputTerm(count=None)),
+        "variable:int32 = input()",
+        VariableDefinitionTerm(name="variable", dtype=DataTypes.INT32, value=InputTerm(count=None)),
     ),
     (
         "variable:str = input(3)",
@@ -178,18 +178,18 @@ test_cases = [
 
     # Functions
     (
-        "int sum[a:int, b:int] { return: a + b }",
+        "int32 sum[a:int32, b:int32] { return: a + b }",
         FunctionDefinitionTerm(
-            return_dtype=DataTypes.INT,
+            return_dtype=DataTypes.INT32,
             name="sum",
             args=[
                 FunctionArgumentTerm(
                     name="a",
-                    dtype=DataTypes.INT,
+                    dtype=DataTypes.INT32,
                 ),
                 FunctionArgumentTerm(
                     name="b",
-                    dtype=DataTypes.INT,
+                    dtype=DataTypes.INT32,
                 ),
             ],
             body=[
@@ -327,11 +327,11 @@ test_cases = [
 
     # For
     (
-        "for [i: int = 1; i < 5; i = i + 1] { break }",
+        "for [i:int32 = 1; i < 5; i = i + 1] { break }",
         ForTerm(
             start=VariableDefinitionTerm(
                 name="i",
-                dtype=DataTypes.INT,
+                dtype=DataTypes.INT32,
                 value=NumberLiteralTerm(value=1),
             ),
             condition=BinOpTerm(

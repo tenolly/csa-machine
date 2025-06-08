@@ -35,7 +35,7 @@ class BitwiseOperator(Enum):
 
 class DataTypes(Enum):
     STR = "str"
-    INT = "int"
+    INT32 = "int32"
     VOID = "void"
 
 
