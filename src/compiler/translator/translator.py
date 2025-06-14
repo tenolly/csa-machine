@@ -96,8 +96,6 @@ from .exceptions import RegisterManagementException, TranslateException
 # TODO: do a total refactoring #
 ################################
 
-DEBUG = True
-
 
 @dataclass
 class Section:
@@ -261,7 +259,7 @@ class Translator:
 
     def _init_default_interrupt_vectors(self) -> None:
         default_interrupt_handler_addr = Addr(-1)
-        default_interrupt_handler = Section("d_int", default_interrupt_handler_addr, [])
+        default_interrupt_handler = Section("_default_int", default_interrupt_handler_addr, [])
         default_interrupt_handler.instructions.append(LazyInstruction(ReturnFromInterruption))
         self.functions[default_interrupt_handler.prefix] = default_interrupt_handler
 
@@ -269,7 +267,7 @@ class Translator:
         input_addr_reg = self.register_manager.second_interrupt_register
 
         input_interrupt_handler_addr = Addr(-1)
-        input_interrupt_handler = Section("input_int", input_interrupt_handler_addr, [])
+        input_interrupt_handler = Section("_input_int", input_interrupt_handler_addr, [])
         input_interrupt_handler.instructions.extend([
             LazyInstruction(LoadLowerImmediate, input_addr_reg, self.memory_manager.io_data_addr.addr),
             LazyInstruction(LoadUpperImmediate, input_addr_reg, self.memory_manager.io_data_addr.addr),
@@ -287,21 +285,22 @@ class Translator:
 
         self.interrupt_vectors.append(input_interrupt_handler_addr)
 
-    def translate(self) -> bytes:
+    def translate(self) -> Tuple[bytes, str]:
         for ast_node in self.program_ast.terms:
             self.program.instructions.extend(self._translate_root_ast_node(ast_node))
         self.program.instructions.append(LazyInstruction(Halt))
 
         self._process_addresses()
 
-        if DEBUG:
-            for label, variable in self.memory_manager.constants.items():
-                print(f"{label}: {variable}")
+        string_representation = ".data\n"
 
-            for label, variable in self.memory_manager.variables.items():
-                print(f"{label}: {variable}")
+        for label, variable in self.memory_manager.constants.items():
+            string_representation += f"{label}: {variable.value!r}\n"
 
-            print()
+        for label, variable in self.memory_manager.variables.items():
+            string_representation += f"{label}: {variable.value!r}\n"
+
+        string_representation += "\n"
 
         program_instructions = [instr.produce() for instr in self.program.instructions]
         functions = [
@@ -335,23 +334,17 @@ class Translator:
         for _ in range(self.program_start_addr - len(bits)):
             bits.append(Word.fill_with_zeros())
 
-        if DEBUG:
-            print(f"{self.program.prefix}:")
+        string_representation += ".text\n"
 
+        string_representation += f"{self.program.prefix}:\n"
         for instruction in program_instructions:
-            if DEBUG:
-                print("    " + str(instruction))
-
+            string_representation += "    " + str(instruction) + "\n"
             bits.append(Word.from_instruction(instruction))
 
         for section, func_instructions in zip(self.functions.values(), functions):
-            if DEBUG:
-                print(f"{section.prefix}:")
-
+            string_representation += f"{section.prefix}:\n"
             for instruction in func_instructions:
-                if DEBUG:
-                    print("    " + str(instruction))
-
+                string_representation += "    " + str(instruction) + "\n"
                 bits.append(Word.from_instruction(instruction))
 
         bytes_gen = map(to_bytes, bits)
@@ -359,7 +352,7 @@ class Translator:
         for b_part in bytes_gen:
             bytes_representation += b_part
 
-        return bytes_representation
+        return bytes_representation, string_representation
 
     def _process_addresses(self) -> None:
         data_addr = self.output_port_addr + 1
@@ -687,11 +680,23 @@ class Translator:
         else:
             string_variable = self.memory_manager.create_constant(None, "0" * ast_node.count)
 
+            new_instructions = []
             for i in range(ast_node.count):
-                inputed_word_register = read_word(instructions)
-                instructions.append(
+                inputed_word_register = read_word(new_instructions)
+                new_instructions.append(LazyInstruction(SignedAdditionImmediate, inputed_word_register, Value(0)))
+                jump_instruction = LazyInstruction(JumpIfZero, Offset(0))
+                jump_instruction.metainfo["calc_jump_to_end"] = True
+                new_instructions.extend([
+                    jump_instruction,
                     LazyInstruction(SaveWord, inputed_word_register, VariableRelativeAddr(string_variable, Offset(i))),
-                )
+                ])
+
+            for i, lazy_instruction in enumerate(new_instructions):
+                if lazy_instruction.metainfo.get("calc_jump_to_end"):
+                    lazy_instruction.metainfo["calc_jump_to_end"] = False
+                    lazy_instruction.args[0].value = len(new_instructions) - i
+
+            instructions.extend(new_instructions)
 
             return string_variable
 

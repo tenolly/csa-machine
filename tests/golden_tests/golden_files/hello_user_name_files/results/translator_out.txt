@@ -1,0 +1,123 @@
+.data
+literal_c_0: 'What is your name?'
+literal_c_1: '00000'
+literal_c_2: ' Hello, '
+literal_c_3: '!'
+_start_username: '00000'
+
+.text
+_start:
+    LLI T7 0x48
+    LUI T7 0x0
+    LWR T8 T7
+    ADDI T8 0x0
+    JZ 0x10
+    SW T8 0x44
+    ADDI T7 0x4
+    JO 0xFFFFFFEC
+    LLI T7 0xF0
+    LUI T7 0x0
+    LWR T7 T7
+    LLI T8 0xF4
+    LUI T8 0x0
+    LWR T8 T8
+    CMP T7 T8
+    JZ 0xFFFFFFE4
+    LWR T7 T8
+    ADDI T8 0x4
+    SW T8 0xF4
+    ADDI T7 0x0
+    JZ 0xE8
+    SW T7 0xD8
+    LLI T7 0xF0
+    LUI T7 0x0
+    LWR T7 T7
+    LLI T8 0xF4
+    LUI T8 0x0
+    LWR T8 T8
+    CMP T7 T8
+    JZ 0xFFFFFFE4
+    LWR T7 T8
+    ADDI T8 0x4
+    SW T8 0xF4
+    ADDI T7 0x0
+    JZ 0xB0
+    SW T7 0xDC
+    LLI T7 0xF0
+    LUI T7 0x0
+    LWR T7 T7
+    LLI T8 0xF4
+    LUI T8 0x0
+    LWR T8 T8
+    CMP T7 T8
+    JZ 0xFFFFFFE4
+    LWR T7 T8
+    ADDI T8 0x4
+    SW T8 0xF4
+    ADDI T7 0x0
+    JZ 0x78
+    SW T7 0xE0
+    LLI T7 0xF0
+    LUI T7 0x0
+    LWR T7 T7
+    LLI T8 0xF4
+    LUI T8 0x0
+    LWR T8 T8
+    CMP T7 T8
+    JZ 0xFFFFFFE4
+    LWR T7 T8
+    ADDI T8 0x4
+    SW T8 0xF4
+    ADDI T7 0x0
+    JZ 0x40
+    SW T7 0xE4
+    LLI T7 0xF0
+    LUI T7 0x0
+    LWR T7 T7
+    LLI T8 0xF4
+    LUI T8 0x0
+    LWR T8 T8
+    CMP T7 T8
+    JZ 0xFFFFFFE4
+    LWR T7 T8
+    ADDI T8 0x4
+    SW T8 0xF4
+    ADDI T7 0x0
+    JZ 0x8
+    SW T7 0xE8
+    LLI T7 0xAC
+    LUI T7 0x0
+    LWR T8 T7
+    ADDI T8 0x0
+    JZ 0x10
+    SW T8 0x44
+    ADDI T7 0x4
+    JO 0xFFFFFFEC
+    LLI T7 0xD8
+    LUI T7 0x0
+    LWR T8 T7
+    ADDI T8 0x0
+    JZ 0x10
+    SW T8 0x44
+    ADDI T7 0x4
+    JO 0xFFFFFFEC
+    LLI T7 0xD0
+    LUI T7 0x0
+    LWR T8 T7
+    ADDI T8 0x0
+    JZ 0x10
+    SW T8 0x44
+    ADDI T7 0x4
+    JO 0xFFFFFFEC
+    HALT
+_default_int:
+    RETI
+_input_int:
+    LLI I2 0xF0
+    LUI I2 0x0
+    LWR I2 I2
+    LW I1 0x40
+    SWR I1 I2
+    ADDI I2 0x4
+    SW I2 0xF0
+    RETI

@@ -1,0 +1,25 @@
+.data
+literal_c_0: 'Hello World'
+
+.text
+_start:
+    LLI T7 0x48
+    LUI T7 0x0
+    LWR T8 T7
+    ADDI T8 0x0
+    JZ 0x10
+    SW T8 0x44
+    ADDI T7 0x4
+    JO 0xFFFFFFEC
+    HALT
+_default_int:
+    RETI
+_input_int:
+    LLI I2 0x78
+    LUI I2 0x0
+    LWR I2 I2
+    LW I1 0x40
+    SWR I1 I2
+    ADDI I2 0x4
+    SW I2 0x78
+    RETI

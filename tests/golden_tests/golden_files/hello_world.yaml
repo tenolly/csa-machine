@@ -1,0 +1,6 @@
+source_code_path: "hello_world_files/source_code.txt"
+machine_config_path: "hello_world_files/machine_config.yaml"
+translator_out_path: "hello_world_files/results/translator_out.txt"
+memory_dump_path: "hello_world_files/results/memory_dump.txt"
+machine_journal_path: "hello_world_files/results/execution.txt"
+output_path: "hello_world_files/results/output.txt"

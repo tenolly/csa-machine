@@ -1,0 +1,10 @@
+machine:
+  ticks_limit: 1000
+  memory_size: 1100
+
+journal_fmt: |
+  {TICK:dec:8} {PC:hex:32} {JPC:hex:32} {IR:bin:32} {AR:hex:32} {ALU_A:hex:32} {ALU_B:hex:32} {BR:hex:32} {T7:hex:32} {T8:hex:32}
+
+memio:
+  tokens: []
+  output_fmt: str

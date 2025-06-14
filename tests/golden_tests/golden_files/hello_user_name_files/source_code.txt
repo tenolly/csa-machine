@@ -1,0 +1,4 @@
+print("What is your name?")
+
+username:str = input(5)
+print(" Hello, ", username, "!")

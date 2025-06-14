@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional
 from isa.constants import INSTR_OPCODE_SIZE, REG_ID_SIZE, WORD_SIZE
 from isa.instructions import InstructionOpcode
 from isa.registers import RegisterCode
-from machine.constants import INPUT_ADDR, START_ADDR
 
+from ..constants import INPUT_ADDR, START_ADDR
 from .common.components.data_latch import DataLatch
 from .common.components.data_selector import DataSelector
 from .common.enums import ALUOperation, Interrupts, RegisterFileFetch
