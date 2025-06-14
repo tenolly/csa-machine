@@ -77,7 +77,7 @@ class _InterruptHandler:
         for i in range(len(str(bin(irq_value)[2:]))):
             if (irq_value & 1) == 1:
                 self.signal_remove_irq(int("1" + "0" * i, 2))
-                self.signal_latch_iv(i)
+                self.signal_read_and_latch_iv(i)
                 break
 
             irq_value >>= 1
@@ -88,7 +88,7 @@ class _InterruptHandler:
 
         return True
 
-    def signal_latch_iv(self, interrupt_vector: int):
+    def signal_read_and_latch_iv(self, interrupt_vector: int):
         self.out.set_input_value(1, self.control_unit.datapath.memory.read(interrupt_vector * 4))
 
     def signal_add_irq(self, interrupt_vector: int) -> None:

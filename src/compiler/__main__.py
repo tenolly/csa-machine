@@ -7,8 +7,8 @@ from .translator import Translator
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("filename", help="Source code file name")
-    parser.add_argument("output", help="Compiled code file name")
+    parser.add_argument("filename", help="The file with the source code")
+    parser.add_argument("output", help="The file into which the source code will be compiled")
     parser.parse_args()
 
     args = parser.parse_args()
