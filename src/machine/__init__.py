@@ -1,13 +1,13 @@
 import os
-from enum import Enum
-from math import ceil
 from typing import Any, Dict, List, Tuple
 
 import yaml
 
 from isa.constants import WORD_SIZE
+from machine.fmt.format_instruction import string_repr_instruction
 
 from .constants import OUTPUT_ADDR
+from .fmt.format_number import _LogNumberFmt, format_number
 from .units.common.exceptions import MachineStop
 from .units.common.helpers import convert_to_signed
 from .units.control_unit import ControlUnit
@@ -17,12 +17,6 @@ from .units.memory import Memory
 MEMORY_DUMP_FILENAME = "memory.txt"
 EXEC_LOG_FILENAME = "execution.txt"
 OUTPUT_LOG_FILENAME = "output.txt"
-
-
-class _LogNumberFmt(Enum):
-    BINARY = "bin"
-    DECIMAL = "dec"
-    HEXADECIMAL = "hex"
 
 
 class Simulation:
@@ -71,9 +65,9 @@ class Simulation:
             for i in range(0, self.memory_size, 4):
                 value = self.memory_unit.read(i)
 
-                addr = self._format_number(i, _LogNumberFmt.HEXADECIMAL, len(bin(self.memory_size)[2:]))
-                hex_value = self._format_number(value, _LogNumberFmt.HEXADECIMAL, WORD_SIZE)
-                bin_value = self._format_number(value, _LogNumberFmt.BINARY, WORD_SIZE)
+                addr = format_number(i, _LogNumberFmt.HEXADECIMAL, len(bin(self.memory_size)[2:]))
+                hex_value = format_number(value, _LogNumberFmt.HEXADECIMAL, WORD_SIZE)
+                bin_value = format_number(value, _LogNumberFmt.BINARY, WORD_SIZE)
 
                 file.write(f"{addr}: {hex_value} - {bin_value}\n")
 
@@ -91,9 +85,11 @@ class Simulation:
                     line = []
                     for element in self.journal_fmt:
                         register, fmt, *args = element
-                        line.append(f"{register}[{fmt.value}]: {self._format_number(tick_state[register], fmt, *args)}")
+                        line.append(f"{register}[{fmt.value}]: {format_number(tick_state[register], fmt, *args)}")
 
-                    file.write(", ".join(line) + "\n")
+                    instruction = string_repr_instruction(bin(tick_state['IR'])[2:].zfill(WORD_SIZE))
+                    registers_state = ", ".join(line)
+                    file.write(f"{registers_state} - {instruction}\n")
 
     def make_output_log(self):
         os.makedirs(self.simulation_dirname, exist_ok=True)
@@ -115,20 +111,6 @@ class Simulation:
                 file.write("".join(chr(char) for char in output))
             else:
                 raise NotImplementedError(f"unexpected output format {self.output_fmt}")
-
-    def _format_number(self, value: int, fmt: _LogNumberFmt, bitsize: int):
-        if value < 0 and fmt in (_LogNumberFmt.BINARY, _LogNumberFmt.HEXADECIMAL):
-            value += 2 ** bitsize
-
-        if fmt == _LogNumberFmt.BINARY:
-            return bin(value)[2:].zfill(bitsize)
-
-        if fmt == _LogNumberFmt.DECIMAL:
-            max_number_len = len(str(int("1" * bitsize, 2)))
-            return str(value).zfill(max_number_len)
-
-        if fmt == _LogNumberFmt.HEXADECIMAL:
-            return hex(value)[2:].zfill(ceil(bitsize / 4))
 
 
 def read_config(filename: str) -> Dict[str, Any]:

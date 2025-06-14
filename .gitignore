@@ -4,5 +4,4 @@ __pycache__
 .mypy_cache
 .pytest_cache
 
-examples
 .build

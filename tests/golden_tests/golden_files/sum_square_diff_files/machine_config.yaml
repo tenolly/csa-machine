@@ -1,0 +1,10 @@
+machine:
+  ticks_limit: 12000
+  memory_size: 1200
+
+journal_fmt: |
+  {TICK:dec:8} {PC:hex:32}
+
+memio:
+  tokens: []
+  output_fmt: num

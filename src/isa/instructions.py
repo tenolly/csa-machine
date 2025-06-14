@@ -59,3 +59,17 @@ class InstructionOpcode(Enum):
     @property
     def bincode(self) -> str:
         return self.value
+
+
+class AddressingMode(Enum):
+    ABSOLUTE = "000"
+    RELATIVE = "001"
+    NO_ADDRESS = "011"
+    REGISTER_1 = "100"
+    REGISTER_2 = "101"
+    REGISTER_3 = "110"
+    DIRECT_LOAD = "111"
+
+    @property
+    def bincode(self) -> str:
+        return self.value

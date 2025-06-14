@@ -1,9 +1,9 @@
 machine:
-  ticks_limit: 5000
+  ticks_limit: 2000
   memory_size: 1800
 
 journal_fmt: |
-  {TICK:dec:8} {PC:hex:32} {JPC:hex:32} {IR:bin:32} {AR:hex:32} {ALU_A:hex:32} {ALU_B:hex:32} {BR:hex:32} {T7:hex:32} {T8:hex:32}
+  {TICK:dec:8} {PC:hex:32} {JPC:hex:32} {IR:hex:32} {AR:hex:32} {BR:hex:32} {T7:hex:32} {T8:hex:32} {I1:hex:32} {I2:hex:32}
 
 memio:
   tokens: [[50, "A"], [100, "l"], [150, "i"], [200, "c"], [250, "e"], [300, "\0"]]

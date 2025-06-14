@@ -1,0 +1,6 @@
+source_code_path: "complex_calculations_files/source_code.txt"
+machine_config_path: "complex_calculations_files/machine_config.yaml"
+translator_out_path: "complex_calculations_files/results/translator_out.txt"
+memory_dump_path: "complex_calculations_files/results/memory_dump.txt"
+machine_journal_path: "complex_calculations_files/results/execution.txt"
+output_path: "complex_calculations_files/results/output.txt"

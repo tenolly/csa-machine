@@ -1,0 +1,6 @@
+source_code_path: "sum_square_diff_files/source_code.txt"
+machine_config_path: "sum_square_diff_files/machine_config.yaml"
+translator_out_path: "sum_square_diff_files/results/translator_out.txt"
+memory_dump_path: "sum_square_diff_files/results/memory_dump.txt"
+machine_journal_path: "sum_square_diff_files/results/execution.txt"
+output_path: "sum_square_diff_files/results/output.txt"

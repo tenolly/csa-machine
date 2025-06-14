@@ -1,0 +1,222 @@
+TICK[dec]: 001, PC[hex]: 00000400, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: 00000000, T2[hex]: 00000000, T3[hex]: 00000000 - LLI T1, 0x2
+TICK[dec]: 002, PC[hex]: 00000404, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: 00000000, T2[hex]: 00000000, T3[hex]: 00000000 - LLI T1, 0x2
+TICK[dec]: 003, PC[hex]: 00000404, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: 00000000, T2[hex]: 00000000, T3[hex]: 00000000 - LLI T1, 0x2
+TICK[dec]: 004, PC[hex]: 00000404, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: 00000000, T2[hex]: 00000000, T3[hex]: 00000000 - LLI T1, 0x2
+TICK[dec]: 005, PC[hex]: 00000404, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: 00000002, T2[hex]: 00000000, T3[hex]: 00000000 - LLI T1, 0x2
+TICK[dec]: 006, PC[hex]: 00000404, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: 00000002, T2[hex]: 00000000, T3[hex]: 00000000 - LUI T1, 0x0
+TICK[dec]: 007, PC[hex]: 00000408, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: 00000002, T2[hex]: 00000000, T3[hex]: 00000000 - LUI T1, 0x0
+TICK[dec]: 008, PC[hex]: 00000408, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: 00000002, T2[hex]: 00000000, T3[hex]: 00000000 - LUI T1, 0x0
+TICK[dec]: 009, PC[hex]: 00000408, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: 00000002, T2[hex]: 00000000, T3[hex]: 00000000 - LUI T1, 0x0
+TICK[dec]: 010, PC[hex]: 00000408, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: 00000002, T2[hex]: 00000000, T3[hex]: 00000000 - LUI T1, 0x0
+TICK[dec]: 011, PC[hex]: 00000408, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: 00000002, T2[hex]: 00000000, T3[hex]: 00000000 - LUI T1, 0x0
+TICK[dec]: 012, PC[hex]: 00000408, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: 00000002, T2[hex]: 00000000, T3[hex]: 00000000 - LUI T1, 0x0
+TICK[dec]: 013, PC[hex]: 00000408, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: 00000002, T2[hex]: 00000000, T3[hex]: 00000000 - LLI T2, 0x4
+TICK[dec]: 014, PC[hex]: 0000040c, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: 00000002, T2[hex]: 00000000, T3[hex]: 00000000 - LLI T2, 0x4
+TICK[dec]: 015, PC[hex]: 0000040c, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: 00000002, T2[hex]: 00000000, T3[hex]: 00000000 - LLI T2, 0x4
+TICK[dec]: 016, PC[hex]: 0000040c, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: 00000002, T2[hex]: 00000000, T3[hex]: 00000000 - LLI T2, 0x4
+TICK[dec]: 017, PC[hex]: 0000040c, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: 00000002, T2[hex]: 00000004, T3[hex]: 00000000 - LLI T2, 0x4
+TICK[dec]: 018, PC[hex]: 0000040c, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: 00000002, T2[hex]: 00000004, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 019, PC[hex]: 00000410, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: 00000002, T2[hex]: 00000004, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 020, PC[hex]: 00000410, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: 00000002, T2[hex]: 00000004, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 021, PC[hex]: 00000410, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: 00000002, T2[hex]: 00000004, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 022, PC[hex]: 00000410, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: 00000002, T2[hex]: 00000004, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 023, PC[hex]: 00000410, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: 00000002, T2[hex]: 00000004, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 024, PC[hex]: 00000410, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: 00000002, T2[hex]: 00000004, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 025, PC[hex]: 00000410, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: 00000002, T2[hex]: 00000004, T3[hex]: 00000000 - ADD T1, T1, T2
+TICK[dec]: 026, PC[hex]: 00000414, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: 00000002, T2[hex]: 00000004, T3[hex]: 00000000 - ADD T1, T1, T2
+TICK[dec]: 027, PC[hex]: 00000414, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: 00000002, T2[hex]: 00000004, T3[hex]: 00000000 - ADD T1, T1, T2
+TICK[dec]: 028, PC[hex]: 00000414, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: 00000002, T2[hex]: 00000004, T3[hex]: 00000000 - ADD T1, T1, T2
+TICK[dec]: 029, PC[hex]: 00000414, AR[hex]: 00000000, BR[hex]: 00000006, T1[hex]: 00000002, T2[hex]: 00000004, T3[hex]: 00000000 - ADD T1, T1, T2
+TICK[dec]: 030, PC[hex]: 00000414, AR[hex]: 00000000, BR[hex]: 00000006, T1[hex]: 00000006, T2[hex]: 00000004, T3[hex]: 00000000 - ADD T1, T1, T2
+TICK[dec]: 031, PC[hex]: 00000414, AR[hex]: 00000000, BR[hex]: 00000006, T1[hex]: 00000006, T2[hex]: 00000004, T3[hex]: 00000000 - NEG T1, T1
+TICK[dec]: 032, PC[hex]: 00000418, AR[hex]: 00000000, BR[hex]: 00000006, T1[hex]: 00000006, T2[hex]: 00000004, T3[hex]: 00000000 - NEG T1, T1
+TICK[dec]: 033, PC[hex]: 00000418, AR[hex]: 00000000, BR[hex]: 00000006, T1[hex]: 00000006, T2[hex]: 00000004, T3[hex]: 00000000 - NEG T1, T1
+TICK[dec]: 034, PC[hex]: 00000418, AR[hex]: 00000000, BR[hex]: 00000006, T1[hex]: 00000006, T2[hex]: 00000004, T3[hex]: 00000000 - NEG T1, T1
+TICK[dec]: 035, PC[hex]: 00000418, AR[hex]: 00000000, BR[hex]: fffffffa, T1[hex]: 00000006, T2[hex]: 00000004, T3[hex]: 00000000 - NEG T1, T1
+TICK[dec]: 036, PC[hex]: 00000418, AR[hex]: 00000000, BR[hex]: fffffffa, T1[hex]: fffffffa, T2[hex]: 00000004, T3[hex]: 00000000 - NEG T1, T1
+TICK[dec]: 037, PC[hex]: 00000418, AR[hex]: 00000000, BR[hex]: fffffffa, T1[hex]: fffffffa, T2[hex]: 00000004, T3[hex]: 00000000 - LLI T2, 0x2
+TICK[dec]: 038, PC[hex]: 0000041c, AR[hex]: 00000000, BR[hex]: fffffffa, T1[hex]: fffffffa, T2[hex]: 00000004, T3[hex]: 00000000 - LLI T2, 0x2
+TICK[dec]: 039, PC[hex]: 0000041c, AR[hex]: 00000000, BR[hex]: fffffffa, T1[hex]: fffffffa, T2[hex]: 00000004, T3[hex]: 00000000 - LLI T2, 0x2
+TICK[dec]: 040, PC[hex]: 0000041c, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: fffffffa, T2[hex]: 00000004, T3[hex]: 00000000 - LLI T2, 0x2
+TICK[dec]: 041, PC[hex]: 0000041c, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: fffffffa, T2[hex]: 00000002, T3[hex]: 00000000 - LLI T2, 0x2
+TICK[dec]: 042, PC[hex]: 0000041c, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: fffffffa, T2[hex]: 00000002, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 043, PC[hex]: 00000420, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: fffffffa, T2[hex]: 00000002, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 044, PC[hex]: 00000420, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: fffffffa, T2[hex]: 00000002, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 045, PC[hex]: 00000420, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: fffffffa, T2[hex]: 00000002, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 046, PC[hex]: 00000420, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: fffffffa, T2[hex]: 00000002, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 047, PC[hex]: 00000420, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: fffffffa, T2[hex]: 00000002, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 048, PC[hex]: 00000420, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: fffffffa, T2[hex]: 00000002, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 049, PC[hex]: 00000420, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: fffffffa, T2[hex]: 00000002, T3[hex]: 00000000 - MUL T1, T1, T2
+TICK[dec]: 050, PC[hex]: 00000424, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: fffffffa, T2[hex]: 00000002, T3[hex]: 00000000 - MUL T1, T1, T2
+TICK[dec]: 051, PC[hex]: 00000424, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: fffffffa, T2[hex]: 00000002, T3[hex]: 00000000 - MUL T1, T1, T2
+TICK[dec]: 052, PC[hex]: 00000424, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: fffffffa, T2[hex]: 00000002, T3[hex]: 00000000 - MUL T1, T1, T2
+TICK[dec]: 053, PC[hex]: 00000424, AR[hex]: 00000000, BR[hex]: fffffff4, T1[hex]: fffffffa, T2[hex]: 00000002, T3[hex]: 00000000 - MUL T1, T1, T2
+TICK[dec]: 054, PC[hex]: 00000424, AR[hex]: 00000000, BR[hex]: fffffff4, T1[hex]: fffffff4, T2[hex]: 00000002, T3[hex]: 00000000 - MUL T1, T1, T2
+TICK[dec]: 055, PC[hex]: 00000424, AR[hex]: 00000000, BR[hex]: fffffff4, T1[hex]: fffffff4, T2[hex]: 00000002, T3[hex]: 00000000 - LLI T2, 0x3
+TICK[dec]: 056, PC[hex]: 00000428, AR[hex]: 00000000, BR[hex]: fffffff4, T1[hex]: fffffff4, T2[hex]: 00000002, T3[hex]: 00000000 - LLI T2, 0x3
+TICK[dec]: 057, PC[hex]: 00000428, AR[hex]: 00000000, BR[hex]: fffffff4, T1[hex]: fffffff4, T2[hex]: 00000002, T3[hex]: 00000000 - LLI T2, 0x3
+TICK[dec]: 058, PC[hex]: 00000428, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: fffffff4, T2[hex]: 00000002, T3[hex]: 00000000 - LLI T2, 0x3
+TICK[dec]: 059, PC[hex]: 00000428, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000000 - LLI T2, 0x3
+TICK[dec]: 060, PC[hex]: 00000428, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 061, PC[hex]: 0000042c, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 062, PC[hex]: 0000042c, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 063, PC[hex]: 0000042c, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 064, PC[hex]: 0000042c, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 065, PC[hex]: 0000042c, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 066, PC[hex]: 0000042c, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000000 - LUI T2, 0x0
+TICK[dec]: 067, PC[hex]: 0000042c, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000000 - LLI T3, 0x4
+TICK[dec]: 068, PC[hex]: 00000430, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000000 - LLI T3, 0x4
+TICK[dec]: 069, PC[hex]: 00000430, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000000 - LLI T3, 0x4
+TICK[dec]: 070, PC[hex]: 00000430, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000000 - LLI T3, 0x4
+TICK[dec]: 071, PC[hex]: 00000430, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000004 - LLI T3, 0x4
+TICK[dec]: 072, PC[hex]: 00000430, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 073, PC[hex]: 00000434, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 074, PC[hex]: 00000434, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 075, PC[hex]: 00000434, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 076, PC[hex]: 00000434, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 077, PC[hex]: 00000434, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 078, PC[hex]: 00000434, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 079, PC[hex]: 00000434, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000004 - MUL T2, T2, T3
+TICK[dec]: 080, PC[hex]: 00000438, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000004 - MUL T2, T2, T3
+TICK[dec]: 081, PC[hex]: 00000438, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000004 - MUL T2, T2, T3
+TICK[dec]: 082, PC[hex]: 00000438, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000004 - MUL T2, T2, T3
+TICK[dec]: 083, PC[hex]: 00000438, AR[hex]: 00000000, BR[hex]: 0000000c, T1[hex]: fffffff4, T2[hex]: 00000003, T3[hex]: 00000004 - MUL T2, T2, T3
+TICK[dec]: 084, PC[hex]: 00000438, AR[hex]: 00000000, BR[hex]: 0000000c, T1[hex]: fffffff4, T2[hex]: 0000000c, T3[hex]: 00000004 - MUL T2, T2, T3
+TICK[dec]: 085, PC[hex]: 00000438, AR[hex]: 00000000, BR[hex]: 0000000c, T1[hex]: fffffff4, T2[hex]: 0000000c, T3[hex]: 00000004 - SUB T1, T1, T2
+TICK[dec]: 086, PC[hex]: 0000043c, AR[hex]: 00000000, BR[hex]: 0000000c, T1[hex]: fffffff4, T2[hex]: 0000000c, T3[hex]: 00000004 - SUB T1, T1, T2
+TICK[dec]: 087, PC[hex]: 0000043c, AR[hex]: 00000000, BR[hex]: 0000000c, T1[hex]: fffffff4, T2[hex]: 0000000c, T3[hex]: 00000004 - SUB T1, T1, T2
+TICK[dec]: 088, PC[hex]: 0000043c, AR[hex]: 00000000, BR[hex]: 0000000c, T1[hex]: fffffff4, T2[hex]: 0000000c, T3[hex]: 00000004 - SUB T1, T1, T2
+TICK[dec]: 089, PC[hex]: 0000043c, AR[hex]: 00000000, BR[hex]: ffffffe8, T1[hex]: fffffff4, T2[hex]: 0000000c, T3[hex]: 00000004 - SUB T1, T1, T2
+TICK[dec]: 090, PC[hex]: 0000043c, AR[hex]: 00000000, BR[hex]: ffffffe8, T1[hex]: ffffffe8, T2[hex]: 0000000c, T3[hex]: 00000004 - SUB T1, T1, T2
+TICK[dec]: 091, PC[hex]: 0000043c, AR[hex]: 00000000, BR[hex]: ffffffe8, T1[hex]: ffffffe8, T2[hex]: 0000000c, T3[hex]: 00000004 - LLI T2, 0x3
+TICK[dec]: 092, PC[hex]: 00000440, AR[hex]: 00000000, BR[hex]: ffffffe8, T1[hex]: ffffffe8, T2[hex]: 0000000c, T3[hex]: 00000004 - LLI T2, 0x3
+TICK[dec]: 093, PC[hex]: 00000440, AR[hex]: 00000000, BR[hex]: ffffffe8, T1[hex]: ffffffe8, T2[hex]: 0000000c, T3[hex]: 00000004 - LLI T2, 0x3
+TICK[dec]: 094, PC[hex]: 00000440, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffe8, T2[hex]: 0000000c, T3[hex]: 00000004 - LLI T2, 0x3
+TICK[dec]: 095, PC[hex]: 00000440, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LLI T2, 0x3
+TICK[dec]: 096, PC[hex]: 00000440, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T2, 0x0
+TICK[dec]: 097, PC[hex]: 00000444, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T2, 0x0
+TICK[dec]: 098, PC[hex]: 00000444, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T2, 0x0
+TICK[dec]: 099, PC[hex]: 00000444, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T2, 0x0
+TICK[dec]: 100, PC[hex]: 00000444, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T2, 0x0
+TICK[dec]: 101, PC[hex]: 00000444, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T2, 0x0
+TICK[dec]: 102, PC[hex]: 00000444, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T2, 0x0
+TICK[dec]: 103, PC[hex]: 00000444, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LLI T3, 0x4
+TICK[dec]: 104, PC[hex]: 00000448, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LLI T3, 0x4
+TICK[dec]: 105, PC[hex]: 00000448, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LLI T3, 0x4
+TICK[dec]: 106, PC[hex]: 00000448, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LLI T3, 0x4
+TICK[dec]: 107, PC[hex]: 00000448, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LLI T3, 0x4
+TICK[dec]: 108, PC[hex]: 00000448, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 109, PC[hex]: 0000044c, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 110, PC[hex]: 0000044c, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 111, PC[hex]: 0000044c, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 112, PC[hex]: 0000044c, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 113, PC[hex]: 0000044c, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 114, PC[hex]: 0000044c, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - LUI T3, 0x0
+TICK[dec]: 115, PC[hex]: 0000044c, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - SUB T2, T2, T3
+TICK[dec]: 116, PC[hex]: 00000450, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - SUB T2, T2, T3
+TICK[dec]: 117, PC[hex]: 00000450, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - SUB T2, T2, T3
+TICK[dec]: 118, PC[hex]: 00000450, AR[hex]: 00000000, BR[hex]: 00000004, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - SUB T2, T2, T3
+TICK[dec]: 119, PC[hex]: 00000450, AR[hex]: 00000000, BR[hex]: ffffffff, T1[hex]: ffffffe8, T2[hex]: 00000003, T3[hex]: 00000004 - SUB T2, T2, T3
+TICK[dec]: 120, PC[hex]: 00000450, AR[hex]: 00000000, BR[hex]: ffffffff, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000004 - SUB T2, T2, T3
+TICK[dec]: 121, PC[hex]: 00000450, AR[hex]: 00000000, BR[hex]: ffffffff, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000004 - LLI T3, 0x7
+TICK[dec]: 122, PC[hex]: 00000454, AR[hex]: 00000000, BR[hex]: ffffffff, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000004 - LLI T3, 0x7
+TICK[dec]: 123, PC[hex]: 00000454, AR[hex]: 00000000, BR[hex]: ffffffff, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000004 - LLI T3, 0x7
+TICK[dec]: 124, PC[hex]: 00000454, AR[hex]: 00000000, BR[hex]: 00000007, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000004 - LLI T3, 0x7
+TICK[dec]: 125, PC[hex]: 00000454, AR[hex]: 00000000, BR[hex]: 00000007, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000007 - LLI T3, 0x7
+TICK[dec]: 126, PC[hex]: 00000454, AR[hex]: 00000000, BR[hex]: 00000007, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000007 - LUI T3, 0x0
+TICK[dec]: 127, PC[hex]: 00000458, AR[hex]: 00000000, BR[hex]: 00000007, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000007 - LUI T3, 0x0
+TICK[dec]: 128, PC[hex]: 00000458, AR[hex]: 00000000, BR[hex]: 00000007, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000007 - LUI T3, 0x0
+TICK[dec]: 129, PC[hex]: 00000458, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000007 - LUI T3, 0x0
+TICK[dec]: 130, PC[hex]: 00000458, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000007 - LUI T3, 0x0
+TICK[dec]: 131, PC[hex]: 00000458, AR[hex]: 00000000, BR[hex]: 00000007, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000007 - LUI T3, 0x0
+TICK[dec]: 132, PC[hex]: 00000458, AR[hex]: 00000000, BR[hex]: 00000007, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000007 - LUI T3, 0x0
+TICK[dec]: 133, PC[hex]: 00000458, AR[hex]: 00000000, BR[hex]: 00000007, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000007 - ADD T2, T2, T3
+TICK[dec]: 134, PC[hex]: 0000045c, AR[hex]: 00000000, BR[hex]: 00000007, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000007 - ADD T2, T2, T3
+TICK[dec]: 135, PC[hex]: 0000045c, AR[hex]: 00000000, BR[hex]: 00000007, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000007 - ADD T2, T2, T3
+TICK[dec]: 136, PC[hex]: 0000045c, AR[hex]: 00000000, BR[hex]: 00000007, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000007 - ADD T2, T2, T3
+TICK[dec]: 137, PC[hex]: 0000045c, AR[hex]: 00000000, BR[hex]: 00000006, T1[hex]: ffffffe8, T2[hex]: ffffffff, T3[hex]: 00000007 - ADD T2, T2, T3
+TICK[dec]: 138, PC[hex]: 0000045c, AR[hex]: 00000000, BR[hex]: 00000006, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000007 - ADD T2, T2, T3
+TICK[dec]: 139, PC[hex]: 0000045c, AR[hex]: 00000000, BR[hex]: 00000006, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000007 - LLI T3, 0x9
+TICK[dec]: 140, PC[hex]: 00000460, AR[hex]: 00000000, BR[hex]: 00000006, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000007 - LLI T3, 0x9
+TICK[dec]: 141, PC[hex]: 00000460, AR[hex]: 00000000, BR[hex]: 00000006, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000007 - LLI T3, 0x9
+TICK[dec]: 142, PC[hex]: 00000460, AR[hex]: 00000000, BR[hex]: 00000009, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000007 - LLI T3, 0x9
+TICK[dec]: 143, PC[hex]: 00000460, AR[hex]: 00000000, BR[hex]: 00000009, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000009 - LLI T3, 0x9
+TICK[dec]: 144, PC[hex]: 00000460, AR[hex]: 00000000, BR[hex]: 00000009, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000009 - LUI T3, 0x0
+TICK[dec]: 145, PC[hex]: 00000464, AR[hex]: 00000000, BR[hex]: 00000009, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000009 - LUI T3, 0x0
+TICK[dec]: 146, PC[hex]: 00000464, AR[hex]: 00000000, BR[hex]: 00000009, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000009 - LUI T3, 0x0
+TICK[dec]: 147, PC[hex]: 00000464, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000009 - LUI T3, 0x0
+TICK[dec]: 148, PC[hex]: 00000464, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000009 - LUI T3, 0x0
+TICK[dec]: 149, PC[hex]: 00000464, AR[hex]: 00000000, BR[hex]: 00000009, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000009 - LUI T3, 0x0
+TICK[dec]: 150, PC[hex]: 00000464, AR[hex]: 00000000, BR[hex]: 00000009, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000009 - LUI T3, 0x0
+TICK[dec]: 151, PC[hex]: 00000464, AR[hex]: 00000000, BR[hex]: 00000009, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000009 - MUL T2, T2, T3
+TICK[dec]: 152, PC[hex]: 00000468, AR[hex]: 00000000, BR[hex]: 00000009, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000009 - MUL T2, T2, T3
+TICK[dec]: 153, PC[hex]: 00000468, AR[hex]: 00000000, BR[hex]: 00000009, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000009 - MUL T2, T2, T3
+TICK[dec]: 154, PC[hex]: 00000468, AR[hex]: 00000000, BR[hex]: 00000009, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000009 - MUL T2, T2, T3
+TICK[dec]: 155, PC[hex]: 00000468, AR[hex]: 00000000, BR[hex]: 00000036, T1[hex]: ffffffe8, T2[hex]: 00000006, T3[hex]: 00000009 - MUL T2, T2, T3
+TICK[dec]: 156, PC[hex]: 00000468, AR[hex]: 00000000, BR[hex]: 00000036, T1[hex]: ffffffe8, T2[hex]: 00000036, T3[hex]: 00000009 - MUL T2, T2, T3
+TICK[dec]: 157, PC[hex]: 00000468, AR[hex]: 00000000, BR[hex]: 00000036, T1[hex]: ffffffe8, T2[hex]: 00000036, T3[hex]: 00000009 - SUB T1, T1, T2
+TICK[dec]: 158, PC[hex]: 0000046c, AR[hex]: 00000000, BR[hex]: 00000036, T1[hex]: ffffffe8, T2[hex]: 00000036, T3[hex]: 00000009 - SUB T1, T1, T2
+TICK[dec]: 159, PC[hex]: 0000046c, AR[hex]: 00000000, BR[hex]: 00000036, T1[hex]: ffffffe8, T2[hex]: 00000036, T3[hex]: 00000009 - SUB T1, T1, T2
+TICK[dec]: 160, PC[hex]: 0000046c, AR[hex]: 00000000, BR[hex]: 00000036, T1[hex]: ffffffe8, T2[hex]: 00000036, T3[hex]: 00000009 - SUB T1, T1, T2
+TICK[dec]: 161, PC[hex]: 0000046c, AR[hex]: 00000000, BR[hex]: ffffffb2, T1[hex]: ffffffe8, T2[hex]: 00000036, T3[hex]: 00000009 - SUB T1, T1, T2
+TICK[dec]: 162, PC[hex]: 0000046c, AR[hex]: 00000000, BR[hex]: ffffffb2, T1[hex]: ffffffb2, T2[hex]: 00000036, T3[hex]: 00000009 - SUB T1, T1, T2
+TICK[dec]: 163, PC[hex]: 0000046c, AR[hex]: 00000000, BR[hex]: ffffffb2, T1[hex]: ffffffb2, T2[hex]: 00000036, T3[hex]: 00000009 - LLI T2, 0xA
+TICK[dec]: 164, PC[hex]: 00000470, AR[hex]: 00000000, BR[hex]: ffffffb2, T1[hex]: ffffffb2, T2[hex]: 00000036, T3[hex]: 00000009 - LLI T2, 0xA
+TICK[dec]: 165, PC[hex]: 00000470, AR[hex]: 00000000, BR[hex]: ffffffb2, T1[hex]: ffffffb2, T2[hex]: 00000036, T3[hex]: 00000009 - LLI T2, 0xA
+TICK[dec]: 166, PC[hex]: 00000470, AR[hex]: 00000000, BR[hex]: 0000000a, T1[hex]: ffffffb2, T2[hex]: 00000036, T3[hex]: 00000009 - LLI T2, 0xA
+TICK[dec]: 167, PC[hex]: 00000470, AR[hex]: 00000000, BR[hex]: 0000000a, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000009 - LLI T2, 0xA
+TICK[dec]: 168, PC[hex]: 00000470, AR[hex]: 00000000, BR[hex]: 0000000a, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000009 - LUI T2, 0x0
+TICK[dec]: 169, PC[hex]: 00000474, AR[hex]: 00000000, BR[hex]: 0000000a, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000009 - LUI T2, 0x0
+TICK[dec]: 170, PC[hex]: 00000474, AR[hex]: 00000000, BR[hex]: 0000000a, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000009 - LUI T2, 0x0
+TICK[dec]: 171, PC[hex]: 00000474, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000009 - LUI T2, 0x0
+TICK[dec]: 172, PC[hex]: 00000474, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000009 - LUI T2, 0x0
+TICK[dec]: 173, PC[hex]: 00000474, AR[hex]: 00000000, BR[hex]: 0000000a, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000009 - LUI T2, 0x0
+TICK[dec]: 174, PC[hex]: 00000474, AR[hex]: 00000000, BR[hex]: 0000000a, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000009 - LUI T2, 0x0
+TICK[dec]: 175, PC[hex]: 00000474, AR[hex]: 00000000, BR[hex]: 0000000a, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000009 - LLI T3, 0x2
+TICK[dec]: 176, PC[hex]: 00000478, AR[hex]: 00000000, BR[hex]: 0000000a, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000009 - LLI T3, 0x2
+TICK[dec]: 177, PC[hex]: 00000478, AR[hex]: 00000000, BR[hex]: 0000000a, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000009 - LLI T3, 0x2
+TICK[dec]: 178, PC[hex]: 00000478, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000009 - LLI T3, 0x2
+TICK[dec]: 179, PC[hex]: 00000478, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000002 - LLI T3, 0x2
+TICK[dec]: 180, PC[hex]: 00000478, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000002 - LUI T3, 0x0
+TICK[dec]: 181, PC[hex]: 0000047c, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000002 - LUI T3, 0x0
+TICK[dec]: 182, PC[hex]: 0000047c, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000002 - LUI T3, 0x0
+TICK[dec]: 183, PC[hex]: 0000047c, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000002 - LUI T3, 0x0
+TICK[dec]: 184, PC[hex]: 0000047c, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000002 - LUI T3, 0x0
+TICK[dec]: 185, PC[hex]: 0000047c, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000002 - LUI T3, 0x0
+TICK[dec]: 186, PC[hex]: 0000047c, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000002 - LUI T3, 0x0
+TICK[dec]: 187, PC[hex]: 0000047c, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000002 - DIV T2, T2, T3
+TICK[dec]: 188, PC[hex]: 00000480, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000002 - DIV T2, T2, T3
+TICK[dec]: 189, PC[hex]: 00000480, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000002 - DIV T2, T2, T3
+TICK[dec]: 190, PC[hex]: 00000480, AR[hex]: 00000000, BR[hex]: 00000002, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000002 - DIV T2, T2, T3
+TICK[dec]: 191, PC[hex]: 00000480, AR[hex]: 00000000, BR[hex]: 00000005, T1[hex]: ffffffb2, T2[hex]: 0000000a, T3[hex]: 00000002 - DIV T2, T2, T3
+TICK[dec]: 192, PC[hex]: 00000480, AR[hex]: 00000000, BR[hex]: 00000005, T1[hex]: ffffffb2, T2[hex]: 00000005, T3[hex]: 00000002 - DIV T2, T2, T3
+TICK[dec]: 193, PC[hex]: 00000480, AR[hex]: 00000000, BR[hex]: 00000005, T1[hex]: ffffffb2, T2[hex]: 00000005, T3[hex]: 00000002 - SUB T1, T1, T2
+TICK[dec]: 194, PC[hex]: 00000484, AR[hex]: 00000000, BR[hex]: 00000005, T1[hex]: ffffffb2, T2[hex]: 00000005, T3[hex]: 00000002 - SUB T1, T1, T2
+TICK[dec]: 195, PC[hex]: 00000484, AR[hex]: 00000000, BR[hex]: 00000005, T1[hex]: ffffffb2, T2[hex]: 00000005, T3[hex]: 00000002 - SUB T1, T1, T2
+TICK[dec]: 196, PC[hex]: 00000484, AR[hex]: 00000000, BR[hex]: 00000005, T1[hex]: ffffffb2, T2[hex]: 00000005, T3[hex]: 00000002 - SUB T1, T1, T2
+TICK[dec]: 197, PC[hex]: 00000484, AR[hex]: 00000000, BR[hex]: ffffffad, T1[hex]: ffffffb2, T2[hex]: 00000005, T3[hex]: 00000002 - SUB T1, T1, T2
+TICK[dec]: 198, PC[hex]: 00000484, AR[hex]: 00000000, BR[hex]: ffffffad, T1[hex]: ffffffad, T2[hex]: 00000005, T3[hex]: 00000002 - SUB T1, T1, T2
+TICK[dec]: 199, PC[hex]: 00000484, AR[hex]: 00000000, BR[hex]: ffffffad, T1[hex]: ffffffad, T2[hex]: 00000005, T3[hex]: 00000002 - LLI T2, 0x3
+TICK[dec]: 200, PC[hex]: 00000488, AR[hex]: 00000000, BR[hex]: ffffffad, T1[hex]: ffffffad, T2[hex]: 00000005, T3[hex]: 00000002 - LLI T2, 0x3
+TICK[dec]: 201, PC[hex]: 00000488, AR[hex]: 00000000, BR[hex]: ffffffad, T1[hex]: ffffffad, T2[hex]: 00000005, T3[hex]: 00000002 - LLI T2, 0x3
+TICK[dec]: 202, PC[hex]: 00000488, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffad, T2[hex]: 00000005, T3[hex]: 00000002 - LLI T2, 0x3
+TICK[dec]: 203, PC[hex]: 00000488, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffad, T2[hex]: 00000003, T3[hex]: 00000002 - LLI T2, 0x3
+TICK[dec]: 204, PC[hex]: 00000488, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffad, T2[hex]: 00000003, T3[hex]: 00000002 - LUI T2, 0x0
+TICK[dec]: 205, PC[hex]: 0000048c, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffad, T2[hex]: 00000003, T3[hex]: 00000002 - LUI T2, 0x0
+TICK[dec]: 206, PC[hex]: 0000048c, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffad, T2[hex]: 00000003, T3[hex]: 00000002 - LUI T2, 0x0
+TICK[dec]: 207, PC[hex]: 0000048c, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffad, T2[hex]: 00000003, T3[hex]: 00000002 - LUI T2, 0x0
+TICK[dec]: 208, PC[hex]: 0000048c, AR[hex]: 00000000, BR[hex]: 00000000, T1[hex]: ffffffad, T2[hex]: 00000003, T3[hex]: 00000002 - LUI T2, 0x0
+TICK[dec]: 209, PC[hex]: 0000048c, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffad, T2[hex]: 00000003, T3[hex]: 00000002 - LUI T2, 0x0
+TICK[dec]: 210, PC[hex]: 0000048c, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffad, T2[hex]: 00000003, T3[hex]: 00000002 - LUI T2, 0x0
+TICK[dec]: 211, PC[hex]: 0000048c, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffad, T2[hex]: 00000003, T3[hex]: 00000002 - ADD T1, T1, T2
+TICK[dec]: 212, PC[hex]: 00000490, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffad, T2[hex]: 00000003, T3[hex]: 00000002 - ADD T1, T1, T2
+TICK[dec]: 213, PC[hex]: 00000490, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffad, T2[hex]: 00000003, T3[hex]: 00000002 - ADD T1, T1, T2
+TICK[dec]: 214, PC[hex]: 00000490, AR[hex]: 00000000, BR[hex]: 00000003, T1[hex]: ffffffad, T2[hex]: 00000003, T3[hex]: 00000002 - ADD T1, T1, T2
+TICK[dec]: 215, PC[hex]: 00000490, AR[hex]: 00000000, BR[hex]: ffffffb0, T1[hex]: ffffffad, T2[hex]: 00000003, T3[hex]: 00000002 - ADD T1, T1, T2
+TICK[dec]: 216, PC[hex]: 00000490, AR[hex]: 00000000, BR[hex]: ffffffb0, T1[hex]: ffffffb0, T2[hex]: 00000003, T3[hex]: 00000002 - ADD T1, T1, T2
+TICK[dec]: 217, PC[hex]: 00000490, AR[hex]: 00000000, BR[hex]: ffffffb0, T1[hex]: ffffffb0, T2[hex]: 00000003, T3[hex]: 00000002 - SW T1, 0x44
+TICK[dec]: 218, PC[hex]: 00000494, AR[hex]: 00000000, BR[hex]: ffffffb0, T1[hex]: ffffffb0, T2[hex]: 00000003, T3[hex]: 00000002 - SW T1, 0x44
+TICK[dec]: 219, PC[hex]: 00000494, AR[hex]: 00000044, BR[hex]: ffffffb0, T1[hex]: ffffffb0, T2[hex]: 00000003, T3[hex]: 00000002 - SW T1, 0x44
+TICK[dec]: 220, PC[hex]: 00000494, AR[hex]: 00000044, BR[hex]: ffffffb0, T1[hex]: ffffffb0, T2[hex]: 00000003, T3[hex]: 00000002 - SW T1, 0x44
+TICK[dec]: 221, PC[hex]: 00000494, AR[hex]: 00000044, BR[hex]: ffffffb0, T1[hex]: ffffffb0, T2[hex]: 00000003, T3[hex]: 00000002 - SW T1, 0x44
+TICK[dec]: 222, PC[hex]: 00000494, AR[hex]: 00000044, BR[hex]: ffffffb0, T1[hex]: ffffffb0, T2[hex]: 00000003, T3[hex]: 00000002 - HALT

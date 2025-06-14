@@ -876,4 +876,10 @@ python -m machine output.bin default.config
  - `read_iv` - сигнал чтения адреса обработчика прерывания
 
 # Тестирование
-Тестирование включается в себя написанные во время разработки [unit-тесты для парсера](tests/unit_tests/compiler_tests/test_parser.py), в которых хорошо видно принцип построения AST дерева, а также [golden-тесты для процессора](tests/golden_tests/golden_files/), для демонстрации работы процессора в целом.
+Тестирование включается в себя написанные во время разработки [unit-тесты для парсера](tests/unit_tests/compiler_tests/test_parser.py), в которых хорошо видно принцип построения AST дерева.<br>
+
+Также здесь содержатся [golden-тесты для процессора](tests/golden_tests/golden_files/), для демонстрации работы процессора в целом:
+ - Вывод "Hello World" [<- перейти](tests/golden_tests/golden_files/hello_world_files/)
+ - Приветствие пользователя [<- перейти](tests/golden_tests/golden_files/hello_user_name_files/)
+ - Euler Problem 6 [<- перейти](tests/golden_tests/golden_files/sum_square_diff_files/)
+ - Сложные вычисления [<- перейти](tests/golden_tests/golden_files/complex_calculations_files/)

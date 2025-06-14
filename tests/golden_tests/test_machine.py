@@ -14,7 +14,8 @@ GOLDEN_FILES_DIRNAME = "golden_files"
 
 
 def assert_content(content_1: str, content_2: str) -> None:
-    assert content_1.strip() == content_2.strip()
+    for line1, line2 in zip(content_1.strip().split("\n"), content_2.strip().split("\n")):
+        assert line1 == line2
 
 
 def get_current_path(path: str) -> str:

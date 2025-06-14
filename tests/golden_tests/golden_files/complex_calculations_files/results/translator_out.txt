@@ -1,0 +1,53 @@
+.data
+
+.text
+_start:
+    LLI T1 0x2
+    LUI T1 0x0
+    LLI T2 0x4
+    LUI T2 0x0
+    ADD T1 T1 T2
+    NEG T1 T1
+    LLI T2 0x2
+    LUI T2 0x0
+    MUL T1 T1 T2
+    LLI T2 0x3
+    LUI T2 0x0
+    LLI T3 0x4
+    LUI T3 0x0
+    MUL T2 T2 T3
+    SUB T1 T1 T2
+    LLI T2 0x3
+    LUI T2 0x0
+    LLI T3 0x4
+    LUI T3 0x0
+    SUB T2 T2 T3
+    LLI T3 0x7
+    LUI T3 0x0
+    ADD T2 T2 T3
+    LLI T3 0x9
+    LUI T3 0x0
+    MUL T2 T2 T3
+    SUB T1 T1 T2
+    LLI T2 0xA
+    LUI T2 0x0
+    LLI T3 0x2
+    LUI T3 0x0
+    DIV T2 T2 T3
+    SUB T1 T1 T2
+    LLI T2 0x3
+    LUI T2 0x0
+    ADD T1 T1 T2
+    SW T1 0x44
+    HALT
+_default_int:
+    RETI
+_input_int:
+    LLI I2 0x48
+    LUI I2 0x0
+    LWR I2 I2
+    LW I1 0x40
+    SWR I1 I2
+    ADDI I2 0x4
+    SW I2 0x48
+    RETI
