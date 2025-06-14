@@ -58,4 +58,4 @@ class InstructionOpcode(Enum):
 
     @property
     def bincode(self) -> str:
-        return self.value[1]
+        return self.value

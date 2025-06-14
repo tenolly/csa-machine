@@ -17,4 +17,4 @@ for [i:int32 = 0; i < 101; i = i + 1] {
 
 square_sum = square_sum * square_sum
 
-print(square_sum, " ", sum_of_squares)
+print(square_sum, sum_of_squares)

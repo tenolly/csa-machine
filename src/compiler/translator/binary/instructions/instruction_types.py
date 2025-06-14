@@ -1,15 +1,21 @@
+from abc import ABC, abstractmethod
+
 from isa.constants import INSTR_OPCODE_SIZE, REG_ID_SIZE, WORD_SIZE
 from isa.instructions import InstructionOpcode
 
 from .core import Register, Value
 
 
-class BaseInstruction:
+class BaseInstruction(ABC):
     def _process_bits(self, bincode: str) -> str:
         if len(bincode) > WORD_SIZE:
             raise ValueError(f"bit representation of {self!r} is too long (expected {WORD_SIZE}, got {len(bincode)})")
 
-        return bincode.rjust(WORD_SIZE, "0")
+        return bincode.zfill(WORD_SIZE)
+
+    @abstractmethod
+    def bits(self) -> str:
+        ...
 
 
 class ImmInstruction(BaseInstruction):
